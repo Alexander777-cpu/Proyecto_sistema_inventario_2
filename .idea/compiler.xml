@@ -7,13 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ms-ordenes" />
-        <module name="ms-accesorios2" />
+        <module name="ms-accesorios" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ms-accesorios2" options="-parameters" />
+      <module name="ms-accesorios" options="-parameters" />
       <module name="ms-ordenes" options="-parameters" />
     </option>
   </component>

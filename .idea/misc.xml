@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/ms-ordenes/pom.xml" />
         <option value="$PROJECT_DIR$/ms-accesorios2/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-accesorios/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-clientes/pom.xml" />
       </list>
     </option>
   </component>

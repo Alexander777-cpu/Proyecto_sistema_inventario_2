@@ -1,10 +1,10 @@
-package pe.edu.upeu.msaccesorios2;
+package pe.edu.upeu.msclientes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsAccesorios2ApplicationTests {
+class MsClientesApplicationTests {
 
     @Test
     void contextLoads() {
