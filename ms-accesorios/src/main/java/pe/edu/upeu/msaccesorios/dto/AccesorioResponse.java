@@ -1,39 +1,20 @@
-package pe.edu.upeu.msaccesorios.entity;
+package pe.edu.upeu.msaccesorios.dto;
 
-import jakarta.persistence.*;
+public class AccesorioResponse {
 
-@Entity
-@Table(name = "accesorios")
-public class AccesorioEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
-
-    @Column(name = "DESCRIPCION", nullable = false, length = 150)
     private String descripcion;
-
-    @Column(name = "PRECIO", nullable = false)
     private Double precio;
-
-    @Column(name = "STOCK", nullable = false)
     private Integer stock;
-
-    @Column(name = "CATEGORIA", nullable = false, length = 50)
     private String categoria;
-
-    @Column(name = "MARCA", nullable = false, length = 50)
     private String marca;
-
-    @Column(name = "ESTADO", nullable = false, length = 20)
     private String estado;
 
-    public AccesorioEntity() {
+    public AccesorioResponse() {
     }
 
-    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, String categoria, String marca, String estado) {
+    public AccesorioResponse(Long id, String nombre, String descripcion, Double precio, Integer stock, String categoria, String marca, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
