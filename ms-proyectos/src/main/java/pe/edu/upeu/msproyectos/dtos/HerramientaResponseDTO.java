@@ -1,13 +1,9 @@
-package pe.edu.upeu.msherramientas.dto;
-
-import jakarta.validation.constraints.NotBlank;
+package pe.edu.upeu.msproyectos.dtos;
 
 import java.time.LocalDate;
 
-public class HerramientaDTO {
-
+public class HerramientaResponseDTO {
     private Long id;
-    @NotBlank
     private String nombre;
     private String tipo;
     private String marca;
@@ -15,10 +11,10 @@ public class HerramientaDTO {
     private LocalDate compra;
     private String vidaUtil;
 
-    public HerramientaDTO() {
+    public HerramientaResponseDTO() {
     }
 
-    public HerramientaDTO(Long id, String nombre, String tipo, String marca, String estado, LocalDate compra, String vidaUtil) {
+    public HerramientaResponseDTO(Long id, String nombre, String tipo, String marca, String estado, LocalDate compra, String vidaUtil) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;

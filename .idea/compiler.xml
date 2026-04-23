@@ -9,19 +9,19 @@
         <module name="config-server" />
         <module name="ms-ordenes" />
         <module name="ms-herramientas" />
-        <module name="ms-melamine" />
         <module name="ms-proveedores" />
+        <module name="ms-melamine" />
         <module name="api-gateway" />
-        <module name="ms-proyectos" />
         <module name="service-registry" />
       </profile>
-      <profile name="Annotation profile for ms-clientes" enabled="true">
+      <profile name="Annotation profile for ms-proyectos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
+        <module name="ms-proyectos" />
         <module name="ms-clientes" />
         <module name="ms-accesorios" />
       </profile>

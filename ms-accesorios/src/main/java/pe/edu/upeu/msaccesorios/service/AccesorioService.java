@@ -14,26 +14,28 @@ import java.util.stream.Collectors;
 @Service
 public class AccesorioService {
 
-    private final AccesorioRepository repository;
-    private final AccesorioMapper mapper;
+    private final AccesorioRepository accesorioRepository;
+    private final AccesorioMapper accesorioMapper;
 
-    public AccesorioService(AccesorioRepository repository, AccesorioMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public AccesorioService(AccesorioRepository accesorioRepository, AccesorioMapper accesorioMapper) {
+        this.accesorioRepository = accesorioRepository;
+        this.accesorioMapper = accesorioMapper;
     }
 
     public List<AccesorioResponse> listar() {
-        return repository.findAll()
+        return accesorioRepository.findAll()
                 .stream()
-                .map(mapper::toResponse)
+                .map(accesorioMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
     public AccesorioResponse buscarPorId(Long id) {
-        AccesorioEntity entity = repository.findById(id)
+        AccesorioEntity entity = accesorioRepository.findById(id)
                 .orElseThrow(() -> new AccesorioNotFoundException(id));
-        return mapper.toResponse(entity);
+        return accesorioMapper.toResponse(entity);
     }
+
+
 
     public AccesorioResponse crear(AccesorioRequest request) {
         if (request.getStock() <= 0) {
@@ -42,13 +44,13 @@ public class AccesorioService {
         if (request.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio debe ser mayor a 0");
         }
-        AccesorioEntity entity = mapper.toEntity(request);
+        AccesorioEntity entity = accesorioMapper.toEntity(request);
         entity.setEstado("ACTIVO");
-        return mapper.toResponse(repository.save(entity));
+        return accesorioMapper.toResponse(accesorioRepository.save(entity));
     }
 
     public AccesorioResponse actualizar(Long id, AccesorioRequest request) {
-        AccesorioEntity entity = repository.findById(id)
+        AccesorioEntity entity = accesorioRepository.findById(id)
                 .orElseThrow(() -> new AccesorioNotFoundException(id));
         if (request.getStock() <= 0) {
             throw new IllegalArgumentException("El stock debe ser mayor a 0");
@@ -56,35 +58,35 @@ public class AccesorioService {
         if (request.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio debe ser mayor a 0");
         }
-        mapper.updateEntity(entity, request);
-        return mapper.toResponse(repository.save(entity));
+        accesorioMapper.updateEntity(entity, request);
+        return accesorioMapper.toResponse(accesorioRepository.save(entity));
     }
 
     public void eliminar(Long id) {
-        AccesorioEntity entity = repository.findById(id)
+        AccesorioEntity entity = accesorioRepository.findById(id)
                 .orElseThrow(() -> new AccesorioNotFoundException(id));
         entity.setEstado("INACTIVO");
-        repository.save(entity);
+        accesorioRepository.save(entity);
     }
 
     public List<AccesorioResponse> buscarPorNombre(String nombre) {
-        return repository.findByNombreContainingIgnoreCase(nombre)
+        return accesorioRepository.findByNombreContainingIgnoreCase(nombre)
                 .stream()
-                .map(mapper::toResponse)
+                .map(accesorioMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
     public List<AccesorioResponse> buscarPorCategoria(String categoria) {
-        return repository.findByCategoria(categoria)
+        return accesorioRepository.findByCategoria(categoria)
                 .stream()
-                .map(mapper::toResponse)
+                .map(accesorioMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
     public List<AccesorioResponse> listarConStock() {
-        return repository.findByStockGreaterThan(0)
+        return accesorioRepository.findByStockGreaterThan(0)
                 .stream()
-                .map(mapper::toResponse)
+                .map(accesorioMapper::toResponse)
                 .collect(Collectors.toList());
     }
 }

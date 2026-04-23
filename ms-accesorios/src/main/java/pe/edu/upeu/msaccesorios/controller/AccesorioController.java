@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/accesorios")
-@CrossOrigin(origins = "http://localhost:8080")
 public class AccesorioController {
 
     private final AccesorioService service;

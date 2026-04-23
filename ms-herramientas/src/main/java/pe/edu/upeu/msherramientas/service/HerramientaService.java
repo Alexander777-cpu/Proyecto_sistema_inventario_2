@@ -1,8 +1,10 @@
 package pe.edu.upeu.msherramientas.service;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upeu.msherramientas.dto.HerramientaDTO;
+import pe.edu.upeu.msherramientas.dto.HerramientaResponse;
 import pe.edu.upeu.msherramientas.entity.HerramientaEntity;
+import pe.edu.upeu.msherramientas.errors.HerramientaNotFoundException;
+import pe.edu.upeu.msherramientas.mapper.HerramientaMapper;
 import pe.edu.upeu.msherramientas.repository.HerramientaRepository;
 
 import java.util.List;
@@ -12,21 +14,24 @@ import java.util.stream.Collectors;
 public class HerramientaService {
 
     private final HerramientaRepository herramientaRepository;
+    private final HerramientaMapper herramientaMapper;
 
-    public HerramientaService(HerramientaRepository herramientaRepository) {
+    public HerramientaService(HerramientaRepository herramientaRepository, HerramientaMapper herramientaMapper) {
         this.herramientaRepository = herramientaRepository;
+        this.herramientaMapper = herramientaMapper;
     }
 
-    public List<HerramientaDTO> listar(){
+    public List<HerramientaResponse> listar(){
         return herramientaRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    public HerramientaDTO buscarPorId(Long id){
-        return toDTO(herramientaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró la herramienta con el ID: " + id)));
+    public HerramientaResponse buscarPorId(Long id) {
+        HerramientaEntity entity = herramientaRepository.findById(id)
+                .orElseThrow(() -> new HerramientaNotFoundException(id));
+        return herramientaMapper.toResponse(entity);
     }
 
-    public HerramientaDTO crear(HerramientaDTO dto){
+    public HerramientaResponse crear(HerramientaResponse dto){
         if (dto == null) {
             throw new IllegalArgumentException("Los datos de la herramienta no pueden ser nulos");
         }
@@ -39,7 +44,7 @@ public class HerramientaService {
         return toDTO(herramientaRepository.save(toEntity(dto)));
     }
 
-    public List<HerramientaDTO> buscarPorNombre(String nombre){
+    public List<HerramientaResponse> buscarPorNombre(String nombre){
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre de búsqueda no puede estar vacío");
         }
@@ -47,7 +52,7 @@ public class HerramientaService {
                 .stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    public HerramientaDTO actualizar(Long id, HerramientaDTO dto){
+    public HerramientaResponse actualizar(Long id, HerramientaResponse dto){
         if (dto == null) {
             throw new IllegalArgumentException("Los datos a actualizar no pueden ser nulos");
         }
@@ -78,8 +83,8 @@ public class HerramientaService {
         herramientaRepository.deleteById(id);
     }
 
-    private HerramientaDTO toDTO(HerramientaEntity e){
-        HerramientaDTO d = new HerramientaDTO();
+    private HerramientaResponse toDTO(HerramientaEntity e){
+        HerramientaResponse d = new HerramientaResponse();
         d.setId(e.getId());
         d.setNombre(e.getNombre());
         d.setTipo(e.getTipo());
@@ -90,7 +95,7 @@ public class HerramientaService {
         return d;
     }
 
-    private HerramientaEntity toEntity(HerramientaDTO d){
+    private HerramientaEntity toEntity(HerramientaResponse d){
         HerramientaEntity e = new HerramientaEntity();
         e.setId(d.getId());
         e.setNombre(d.getNombre());
