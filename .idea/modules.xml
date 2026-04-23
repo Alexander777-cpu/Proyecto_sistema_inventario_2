@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Proyecto_sistema_inventario.iml" filepath="$PROJECT_DIR$/.idea/Proyecto_sistema_inventario.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ms-accesorios/ms-accesorios.iml" filepath="$PROJECT_DIR$/ms-accesorios/ms-accesorios.iml" />
     </modules>
   </component>
 </project>
