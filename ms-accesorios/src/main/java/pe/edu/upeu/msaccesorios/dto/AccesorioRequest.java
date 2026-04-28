@@ -5,18 +5,20 @@ import jakarta.validation.constraints.*;
 public class AccesorioRequest {
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 100, message = "El nombre no debe exceder 100 caracteres")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
 
-    @Size(max = 255, message = "La descripción no debe exceder 255 caracteres")
+    @Size(min = 5, max = 255, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String descripcion;
 
     @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
+    @DecimalMax(value = "999999.99", message = "El precio no puede exceder 999999.99")
     private Double precio;
 
     @NotNull(message = "El stock es obligatorio")
     @Min(value = 1, message = "El stock debe ser mayor a 0")
+    @Max(value = 10000, message = "El stock no puede exceder 10000 unidades")
     private Integer stock;
 
     @Size(max = 50, message = "La categoría no debe exceder 50 caracteres")

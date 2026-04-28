@@ -38,6 +38,9 @@ public class AccesorioService {
 
 
     public AccesorioResponse crear(AccesorioRequest request) {
+        accesorioRepository.findByNombreIgnoreCase(request.getNombre()).ifPresent(a -> {
+            throw new IllegalArgumentException("Ya existe un accesorio con el nombre: " + request.getNombre());
+        }); 
         if (request.getStock() <= 0) {
             throw new IllegalArgumentException("El stock debe ser mayor a 0");
         }

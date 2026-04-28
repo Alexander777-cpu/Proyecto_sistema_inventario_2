@@ -20,4 +20,4 @@ spring:
         dialect: org.hibernate.dialect.OracleDialect
 
 server:
-  port: 8081
+  port: 8083
