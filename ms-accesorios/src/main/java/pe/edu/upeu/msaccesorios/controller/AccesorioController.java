@@ -31,13 +31,23 @@ public class AccesorioController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<List<AccesorioResponse>> buscarPorNombre(@RequestParam String nombre) {
-        return ResponseEntity.ok(service.buscarPorNombre(nombre));
+    public ResponseEntity<?> buscarPorNombre(@RequestParam String nombre) {
+        try {
+            return ResponseEntity.ok(service.buscarPorNombre(nombre));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(java.util.Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<AccesorioResponse>> buscarPorCategoria(@PathVariable String categoria) {
-        return ResponseEntity.ok(service.buscarPorCategoria(categoria));
+    public ResponseEntity<?> buscarPorCategoria(@PathVariable String categoria) {
+        try {
+            return ResponseEntity.ok(service.buscarPorCategoria(categoria));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(java.util.Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping("/con-stock")
@@ -46,8 +56,13 @@ public class AccesorioController {
     }
 
     @PostMapping
-    public ResponseEntity<AccesorioResponse> crear(@Valid @RequestBody AccesorioRequest request) {
-        return new ResponseEntity<>(service.crear(request), HttpStatus.CREATED);
+    public ResponseEntity<?> crear(@Valid @RequestBody AccesorioRequest request) {
+        try {
+            return new ResponseEntity<>(service.crear(request), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(java.util.Map.of("error", e.getMessage()));
+        }
     }
 
     @PutMapping("/{id}")

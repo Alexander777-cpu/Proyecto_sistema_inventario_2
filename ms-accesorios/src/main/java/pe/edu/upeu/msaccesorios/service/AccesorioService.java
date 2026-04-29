@@ -43,15 +43,26 @@ public class AccesorioService {
     }
 
     public List<AccesorioResponse> buscarPorNombre(String nombre) {
-        return manager.listar().stream()
+        List<AccesorioResponse> resultado = manager.listar().stream()
                 .filter(a -> a.getNombre().toLowerCase().contains(nombre.toLowerCase()))
                 .collect(java.util.stream.Collectors.toList());
+
+        if (resultado.isEmpty()) {
+            throw new IllegalArgumentException("No se encontraron accesorios con el nombre: " + nombre);
+        }
+        return resultado;
     }
 
     public List<AccesorioResponse> buscarPorCategoria(String categoria) {
-        return manager.listar().stream()
-                .filter(a -> categoria.equalsIgnoreCase(a.getCategoria()))
+        List<AccesorioResponse> resultado = manager.listar().stream()
+                .filter(a -> a.getCategoria() != null &&
+                        a.getCategoria().toLowerCase().startsWith(categoria.toLowerCase()))
                 .collect(java.util.stream.Collectors.toList());
+
+        if (resultado.isEmpty()) {
+            throw new IllegalArgumentException("No se encontraron accesorios con la categoría: " + categoria);
+        }
+        return resultado;
     }
 
     public List<AccesorioResponse> listarConStock() {
@@ -73,8 +84,11 @@ public class AccesorioService {
     }
 
     public AccesorioResponse fallbackCrear(AccesorioRequest request, Throwable t) {
+        if (t instanceof IllegalArgumentException) {
+            throw (IllegalArgumentException) t;
+        }
         AccesorioResponse response = new AccesorioResponse();
-        response.setNombre("No se pudo crear el accesorio, servicio no disponible");
+        response.setNombre("Error: " + t.getMessage());
         response.setEstado("NO DISPONIBLE");
         return response;
     }
