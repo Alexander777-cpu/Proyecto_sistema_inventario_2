@@ -8,12 +8,13 @@ public class AccesorioRequest {
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
 
+    @NotBlank(message = "La descripción es obligatoria")
     @Size(min = 5, max = 255, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String descripcion;
 
     @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
-    @DecimalMax(value = "999999.99", message = "El precio no puede exceder 999999.99")
+    @DecimalMax(value = "999999", message = "El precio no puede exceder 999999")
     private Double precio;
 
     @NotNull(message = "El stock es obligatorio")
@@ -21,10 +22,12 @@ public class AccesorioRequest {
     @Max(value = 10000, message = "El stock no puede exceder 10000 unidades")
     private Integer stock;
 
-    @Size(max = 50, message = "La categoría no debe exceder 50 caracteres")
+    @NotBlank(message = "La categoría es obligatoria")
+    @Size(min = 2, max = 50, message = "La categoría debe tener entre 2 y 50 caracteres")
     private String categoria;
 
-    @Size(max = 50, message = "La marca no debe exceder 50 caracteres")
+    @NotBlank(message = "La marca es obligatoria")
+    @Size(min = 2, max = 50, message = "La marca debe tener entre 2 y 50 caracteres")
     private String marca;
 
     public AccesorioRequest() {

@@ -4,13 +4,16 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import pe.edu.upeu.msaccesorios.dto.AccesorioRequest;
 import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
+import pe.edu.upeu.msaccesorios.errors.AccesorioNotFoundException;
 import pe.edu.upeu.msaccesorios.manager.IAccesorioManager;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccesorioService {
+
     private final IAccesorioManager manager;
 
     public AccesorioService(IAccesorioManager manager) {
@@ -42,33 +45,34 @@ public class AccesorioService {
         manager.eliminar(id);
     }
 
+    @CircuitBreaker(name = "accesorioService", fallbackMethod = "fallbackBuscarPorNombre")
     public List<AccesorioResponse> buscarPorNombre(String nombre) {
         List<AccesorioResponse> resultado = manager.listar().stream()
                 .filter(a -> a.getNombre().toLowerCase().contains(nombre.toLowerCase()))
-                .collect(java.util.stream.Collectors.toList());
-
+                .collect(Collectors.toList());
         if (resultado.isEmpty()) {
             throw new IllegalArgumentException("No se encontraron accesorios con el nombre: " + nombre);
         }
         return resultado;
     }
 
+    @CircuitBreaker(name = "accesorioService", fallbackMethod = "fallbackBuscarPorCategoria")
     public List<AccesorioResponse> buscarPorCategoria(String categoria) {
         List<AccesorioResponse> resultado = manager.listar().stream()
                 .filter(a -> a.getCategoria() != null &&
                         a.getCategoria().toLowerCase().startsWith(categoria.toLowerCase()))
-                .collect(java.util.stream.Collectors.toList());
-
+                .collect(Collectors.toList());
         if (resultado.isEmpty()) {
             throw new IllegalArgumentException("No se encontraron accesorios con la categoría: " + categoria);
         }
         return resultado;
     }
 
+    @CircuitBreaker(name = "accesorioService", fallbackMethod = "fallbackListarConStock")
     public List<AccesorioResponse> listarConStock() {
         return manager.listar().stream()
                 .filter(a -> a.getStock() != null && a.getStock() > 0)
-                .collect(java.util.stream.Collectors.toList());
+                .collect(Collectors.toList());
     }
 
 
@@ -77,29 +81,45 @@ public class AccesorioService {
     }
 
     public AccesorioResponse fallbackBuscarPorId(Long id, Throwable t) {
+        if (t instanceof AccesorioNotFoundException) throw (AccesorioNotFoundException) t;
         AccesorioResponse response = new AccesorioResponse();
-        response.setNombre("Servicio de accesorios no disponible");
+        response.setNombre("Servicio no disponible");
         response.setEstado("NO DISPONIBLE");
         return response;
     }
 
+
     public AccesorioResponse fallbackCrear(AccesorioRequest request, Throwable t) {
-        if (t instanceof IllegalArgumentException) {
-            throw (IllegalArgumentException) t;
-        }
+        if (t instanceof IllegalArgumentException) throw (IllegalArgumentException) t;
         AccesorioResponse response = new AccesorioResponse();
-        response.setNombre("Error: " + t.getMessage());
+        response.setNombre("Servicio no disponible temporalmente");
         response.setEstado("NO DISPONIBLE");
         return response;
     }
 
     public AccesorioResponse fallbackActualizar(Long id, AccesorioRequest request, Throwable t) {
+        if (t instanceof AccesorioNotFoundException) throw (AccesorioNotFoundException) t;
         AccesorioResponse response = new AccesorioResponse();
-        response.setNombre("No se pudo actualizar el accesorio, servicio no disponible");
+        response.setNombre("No se pudo actualizar, servicio no disponible");
         response.setEstado("NO DISPONIBLE");
         return response;
     }
 
     public void fallbackEliminar(Long id, Throwable t) {
+        if (t instanceof AccesorioNotFoundException) throw (AccesorioNotFoundException) t;
+    }
+
+    public List<AccesorioResponse> fallbackBuscarPorNombre(String nombre, Throwable t) {
+        if (t instanceof IllegalArgumentException) throw (IllegalArgumentException) t;
+        return Collections.emptyList();
+    }
+
+    public List<AccesorioResponse> fallbackBuscarPorCategoria(String categoria, Throwable t) {
+        if (t instanceof IllegalArgumentException) throw (IllegalArgumentException) t;
+        return Collections.emptyList();
+    }
+
+    public List<AccesorioResponse> fallbackListarConStock(Throwable t) {
+        return Collections.emptyList();
     }
 }

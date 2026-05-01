@@ -50,11 +50,6 @@ public class AccesorioController {
         }
     }
 
-    @GetMapping("/con-stock")
-    public ResponseEntity<List<AccesorioResponse>> listarConStock() {
-        return ResponseEntity.ok(service.listarConStock());
-    }
-
     @PostMapping
     public ResponseEntity<?> crear(@Valid @RequestBody AccesorioRequest request) {
         try {
@@ -71,8 +66,8 @@ public class AccesorioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         service.eliminar(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(java.util.Map.of("mensaje", "Accesorio con id " + id + " eliminado correctamente"));
     }
 }

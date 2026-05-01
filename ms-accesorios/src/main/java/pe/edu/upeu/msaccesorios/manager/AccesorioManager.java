@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class AccesorioManager implements IAccesorioManager {
-
     private final AccesorioRepository repository;
     private final AccesorioMapper mapper;
 
@@ -24,62 +23,42 @@ public class AccesorioManager implements IAccesorioManager {
 
     @Override
     public List<AccesorioResponse> listar() {
-        try {
-            return repository.findAll()
-                    .stream()
-                    .map(mapper::toResponse)
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw ex;
-        }
+        return repository.findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
     public AccesorioResponse buscarPorId(Long id) {
-        try {
-            AccesorioEntity entity = repository.findById(id)
-                    .orElseThrow(() -> new AccesorioNotFoundException(id));
-            return mapper.toResponse(entity);
-        } catch (Exception ex) {
-            throw ex;
-        }
+        AccesorioEntity entity = repository.findById(id)
+                .orElseThrow(() -> new AccesorioNotFoundException(id));
+        return mapper.toResponse(entity);
     }
 
     @Override
     public AccesorioResponse crear(AccesorioRequest request) {
-        try {
-            repository.findByNombreIgnoreCase(request.getNombre()).ifPresent(a -> {
-                throw new IllegalArgumentException("Ya existe un accesorio con el nombre: " + request.getNombre());
-            });
-            AccesorioEntity entity = mapper.toEntity(request);
-            entity.setEstado("ACTIVO");
-            return mapper.toResponse(repository.save(entity));
-        } catch (Exception ex) {
-            throw ex;
-        }
+        repository.findByNombreIgnoreCase(request.getNombre()).ifPresent(a -> {
+            throw new IllegalArgumentException("Ya existe un accesorio con el nombre: " + request.getNombre());
+        });
+        AccesorioEntity entity = mapper.toEntity(request);
+        entity.setEstado("ACTIVO");
+        return mapper.toResponse(repository.save(entity));
     }
 
     @Override
     public AccesorioResponse actualizar(Long id, AccesorioRequest request) {
-        try {
-            AccesorioEntity entity = repository.findById(id)
-                    .orElseThrow(() -> new AccesorioNotFoundException(id));
-            mapper.updateEntity(entity, request);
-            return mapper.toResponse(repository.save(entity));
-        } catch (Exception ex) {
-            throw ex;
-        }
+        AccesorioEntity entity = repository.findById(id)
+                .orElseThrow(() -> new AccesorioNotFoundException(id));
+        mapper.updateEntity(entity, request);
+        return mapper.toResponse(repository.save(entity));
     }
 
     @Override
     public void eliminar(Long id) {
-        try {
-            AccesorioEntity entity = repository.findById(id)
-                    .orElseThrow(() -> new AccesorioNotFoundException(id));
-            entity.setEstado("INACTIVO");
-            repository.save(entity);
-        } catch (Exception ex) {
-            throw ex;
-        }
+        AccesorioEntity entity = repository.findById(id)
+                .orElseThrow(() -> new AccesorioNotFoundException(id));
+        entity.setEstado("INACTIVO");
+        repository.save(entity);
     }
 }
