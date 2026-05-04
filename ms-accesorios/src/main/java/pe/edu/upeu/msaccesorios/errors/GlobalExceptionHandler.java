@@ -6,6 +6,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,33 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handleMessageNotReadable(HttpMessageNotReadableException ex) {
+        Map<String, String> error = new HashMap<>();
+        String mensaje = "El cuerpo de la solicitud tiene un formato incorrecto";
+
+        Throwable causa = ex.getCause();
+        if (causa instanceof InvalidFormatException) {
+            InvalidFormatException ife = (InvalidFormatException) causa;
+            String campo = "desconocido";
+            if (!ife.getPath().isEmpty()) {
+                campo = ife.getPath().get(0).getFieldName();
+            }
+            String tipo = ife.getTargetType().getSimpleName();
+            String valor = String.valueOf(ife.getValue());
+            if (tipo.equals("Integer") || tipo.equals("Long")) {
+                mensaje = "El campo '" + campo + "' debe ser un numero entero, se recibio: " + valor;
+            } else if (tipo.equals("Double") || tipo.equals("Float")) {
+                mensaje = "El campo '" + campo + "' debe ser un numero decimal, se recibio: " + valor;
+            } else {
+                mensaje = "El campo '" + campo + "' tiene un valor invalido: " + valor;
+            }
+        }
+
+        error.put("error", mensaje);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Map<String, String>> handleNoResource(NoResourceFoundException ex) {
         Map<String, String> error = new HashMap<>();
@@ -48,5 +77,10 @@ public class GlobalExceptionHandler {
         error.put("error", "Error interno del servidor");
         error.put("detalle", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrores());
     }
 }

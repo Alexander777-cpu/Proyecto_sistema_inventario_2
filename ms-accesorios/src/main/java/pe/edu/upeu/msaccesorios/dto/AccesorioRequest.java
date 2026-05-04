@@ -12,15 +12,11 @@ public class AccesorioRequest {
     @Size(min = 5, max = 255, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String descripcion;
 
-    @NotNull(message = "El precio es obligatorio")
-    @Positive(message = "El precio debe ser mayor a 0")
-    @DecimalMax(value = "999999", message = "El precio no puede exceder 999999")
-    private Double precio;
+    @NotBlank(message = "El precio es obligatorio — debe ser un número decimal")
+    private String precio;
 
-    @NotNull(message = "El stock es obligatorio")
-    @Min(value = 1, message = "El stock debe ser mayor a 0")
-    @Max(value = 10000, message = "El stock no puede exceder 10000 unidades")
-    private Integer stock;
+    @NotBlank(message = "El stock es obligatorio — debe ser un número entero")
+    private String stock;
 
     @NotBlank(message = "La categoría es obligatoria")
     @Size(min = 2, max = 50, message = "La categoría debe tener entre 2 y 50 caracteres")
@@ -49,19 +45,19 @@ public class AccesorioRequest {
         this.descripcion = descripcion;
     }
 
-    public Double getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 
-    public Integer getStock() {
+    public String getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(String stock) {
         this.stock = stock;
     }
 
@@ -79,5 +75,21 @@ public class AccesorioRequest {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public Double getPrecioAsDouble() {
+        if (precio == null) return null;
+        double valor = Double.parseDouble(precio);
+        if (valor <= 0) throw new IllegalArgumentException("El precio debe ser mayor a 0");
+        if (valor > 999.99) throw new IllegalArgumentException("El precio no puede exceder 999.99");
+        return valor;
+    }
+
+    public Integer getStockAsInteger() {
+        if (stock == null) return null;
+        int valor = Integer.parseInt(stock);
+        if (valor < 1) throw new IllegalArgumentException("El stock debe ser mayor a 0");
+        if (valor > 1000) throw new IllegalArgumentException("El stock no puede exceder 1000 unidades");
+        return valor;
     }
 }

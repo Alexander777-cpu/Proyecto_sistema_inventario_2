@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.upeu.msaccesorios.dto.AccesorioRequest;
 import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
 import pe.edu.upeu.msaccesorios.errors.AccesorioNotFoundException;
+import pe.edu.upeu.msaccesorios.errors.ValidationException;
 import pe.edu.upeu.msaccesorios.manager.IAccesorioManager;
 
 import java.util.Collections;
@@ -75,7 +76,6 @@ public class AccesorioService {
                 .collect(Collectors.toList());
     }
 
-
     public List<AccesorioResponse> fallbackListar(Throwable t) {
         return Collections.emptyList();
     }
@@ -88,8 +88,8 @@ public class AccesorioService {
         return response;
     }
 
-
     public AccesorioResponse fallbackCrear(AccesorioRequest request, Throwable t) {
+        if (t instanceof ValidationException) throw (ValidationException) t;
         if (t instanceof IllegalArgumentException) throw (IllegalArgumentException) t;
         AccesorioResponse response = new AccesorioResponse();
         response.setNombre("Servicio no disponible temporalmente");
@@ -98,6 +98,8 @@ public class AccesorioService {
     }
 
     public AccesorioResponse fallbackActualizar(Long id, AccesorioRequest request, Throwable t) {
+        if (t instanceof ValidationException) throw (ValidationException) t;
+        if (t instanceof IllegalArgumentException) throw (IllegalArgumentException) t;
         if (t instanceof AccesorioNotFoundException) throw (AccesorioNotFoundException) t;
         AccesorioResponse response = new AccesorioResponse();
         response.setNombre("No se pudo actualizar, servicio no disponible");

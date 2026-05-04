@@ -15,6 +15,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  jackson:
+    deserialization:
+      fail-on-null-for-primitives: true
 
 server:
   port: 8084
@@ -53,8 +56,13 @@ resilience4j:
         ignoreExceptions:
           - java.lang.IllegalArgumentException
           - pe.edu.upeu.msaccesorios.errors.AccesorioNotFoundException
+          - pe.edu.upeu.msaccesorios.errors.ValidationException
     instances:
       accesorioService:
         minimumNumberOfCalls: 5
         failureRateThreshold: 50
         baseConfig: default
+        ignoreExceptions:
+          - java.lang.IllegalArgumentException
+          - pe.edu.upeu.msaccesorios.errors.AccesorioNotFoundException
+          - pe.edu.upeu.msaccesorios.errors.ValidationException
