@@ -30,11 +30,6 @@ public class ClienteController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    @GetMapping("/dni/{dni}")
-    public ResponseEntity<ClienteResponse> buscarPorDni(@PathVariable String dni) {
-        return ResponseEntity.ok(service.buscarPorDni(dni));
-    }
-
     @GetMapping("/buscar")
     public ResponseEntity<List<ClienteResponse>> buscarPorNombre(@RequestParam String nombre) {
         return ResponseEntity.ok(service.buscarPorNombre(nombre));

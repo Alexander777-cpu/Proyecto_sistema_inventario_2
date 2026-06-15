@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ClienteService implements  IClienteService {
+public class ClienteService implements IClienteService {
 
     private final ClienteRepository repository;
     private final ClienteMapper mapper;
@@ -46,19 +46,23 @@ public class ClienteService implements  IClienteService {
     @Override
     @CircuitBreaker(name = "clientesCB", fallbackMethod = "fallbackMethod")
     public ClienteResponse crear(ClienteRequest request) throws Exception {
-        // Validación local (DB)
-        repository.findByNombreContainingIgnoreCase(request.getNombre()).ifPresent(c -> {
-            throw new IllegalArgumentException("Ya existe un cliente con el DNI: " + request.getNombre());
-        });
+        // Corrección: Usamos isEmpty() porque el repositorio devuelve una List
+        List<ClienteEntity> existentes = repository.findByNombreContainingIgnoreCase(request.getNombre());
+        if (!existentes.isEmpty()) {
+            throw new IllegalArgumentException("Ya existe un cliente con el nombre: " + request.getNombre());
+        }
+
+        // Si en el futuro usas la validación externa del teléfono, iría aquí:
+        // clienteManager.validarTelefonoExterno(request.getTelefono());
 
         ClienteEntity entity = mapper.toEntity(request);
-        entity.setEstado("ACTIVO");
         return mapper.toResponse(repository.save(entity));
     }
 
     public ClienteResponse fallbackMethod(ClienteRequest request, Exception e) {
         ClienteEntity entity = mapper.toEntity(request);
-        entity.setEstado("FALLBACK - SERVICIO DE VALIDACIÓN NO DISPONIBLE");
+        // Corrección: Como no hay campo 'estado', usamos 'direccion' para el aviso de Fallback
+        entity.setDireccion("FALLBACK - SERVICIO NO DISPONIBLE");
         return mapper.toResponse(entity);
     }
 
@@ -74,8 +78,8 @@ public class ClienteService implements  IClienteService {
     public void eliminar(Long id) {
         ClienteEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ClienteNotFoundException(id));
-        entity.setEstado("INACTIVO");
-        repository.save(entity);
+        // Corrección: Borrado físico, ya que no manejamos un 'estado' lógico
+        repository.delete(entity);
     }
 
     @Override
@@ -93,5 +97,4 @@ public class ClienteService implements  IClienteService {
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
-
 }
