@@ -21,8 +21,9 @@ public class HerramientaEntity {
     @Column(name = "MARCA", nullable = false, length = 100)
     private String marca;
 
-    @Column(name = "ESTADO", nullable = false, length = 100)
-    private String estado;
+    // CORREGIDO: Ahora es un Long, sin el 'length = 100'
+    @Column(name = "ESTADO_ID", nullable = false)
+    private Long estadoId;
 
     @Column(name = "FECHA_COMPRA", nullable = false)
     private LocalDate compra;
@@ -39,12 +40,12 @@ public class HerramientaEntity {
     public HerramientaEntity() {
     }
 
-    public HerramientaEntity(Long id, String nombre, String tipo, String marca, String estado, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+    public HerramientaEntity(Long id, String nombre, String tipo, String marca, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.marca = marca;
-        this.estado = estado;
+        this.estadoId = estadoId;
         this.compra = compra;
         this.fechaInicio = fechaInicio;
         this.vidaUtil = vidaUtil;
@@ -83,12 +84,12 @@ public class HerramientaEntity {
         this.marca = marca;
     }
 
-    public String getEstado() {
-        return estado;
+    public Long getEstadoId() {
+        return estadoId;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstadoId(Long estadoId) {
+        this.estadoId = estadoId;
     }
 
     public LocalDate getCompra() {

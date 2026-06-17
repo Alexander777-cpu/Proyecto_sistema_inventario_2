@@ -17,33 +17,30 @@ public class HerramientaRequest {
     @Size(max = 100, message = "La marca no debe exceder 100 caracteres")
     private String marca;
 
-    @NotBlank(message = "El estado es obligatorio")
-    @Size(max = 50, message = "El estado no debe exceder 50 caracteres")
-    private String estado;
+    // AHORA ES UN LONG (Para que coincida con ms-estado)
+    @NotNull(message = "El ID del estado es obligatorio")
+    private Long estadoId;
 
     @NotNull(message = "La fecha de compra es obligatoria")
     private LocalDate compra;
 
-    // 1. NUEVO CAMPO AÑADIDO
     @NotNull(message = "La fecha de inicio de uso es obligatoria")
     private LocalDate fechaInicio;
 
-    // 2. CORREGIDO A INTEGER CON VALIDACIÓN NUMÉRICA
     @NotNull(message = "La vida útil es obligatoria")
     @Min(value = 1, message = "La vida útil debe ser de al menos 1 mes")
     private Integer vidaUtil;
 
-    // 3. CAMPO OPCIONAL PARA LA IMAGEN (Sin validaciones estrictas porque puede venir vacío)
     private String imagenUrl;
 
     public HerramientaRequest() {
     }
 
-    public HerramientaRequest(String nombre, String tipo, String marca, String estado, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+    public HerramientaRequest(String nombre, String tipo, String marca, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.marca = marca;
-        this.estado = estado;
+        this.estadoId = estadoId;
         this.compra = compra;
         this.fechaInicio = fechaInicio;
         this.vidaUtil = vidaUtil;
@@ -74,12 +71,12 @@ public class HerramientaRequest {
         this.marca = marca;
     }
 
-    public String getEstado() {
-        return estado;
+    public Long getEstadoId() {
+        return estadoId;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstadoId(Long estadoId) {
+        this.estadoId = estadoId;
     }
 
     public LocalDate getCompra() {

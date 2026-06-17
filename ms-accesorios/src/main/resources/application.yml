@@ -66,3 +66,7 @@ resilience4j:
           - java.lang.IllegalArgumentException
           - pe.edu.upeu.msaccesorios.errors.AccesorioNotFoundException
           - pe.edu.upeu.msaccesorios.errors.ValidationException
+
+app:
+  upload:
+    dir: uploads

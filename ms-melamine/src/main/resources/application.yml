@@ -59,3 +59,7 @@ resilience4j:
       # IMPORTANTE: Este nombre debe coincidir con @CircuitBreaker(name = "melamineCB")
       melamineCB:
         baseConfig: default
+
+app:
+  upload:
+    dir: uploads

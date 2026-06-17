@@ -60,3 +60,7 @@ resilience4j:
       # IMPORTANTE: Este nombre debe coincidir con @CircuitBreaker(name = "proveedoresCB")
       proveedoresCB:
         baseConfig: default
+
+app:
+  upload:
+    dir: uploads

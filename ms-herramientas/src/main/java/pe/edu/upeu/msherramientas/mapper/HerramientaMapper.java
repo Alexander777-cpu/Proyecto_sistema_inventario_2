@@ -16,7 +16,7 @@ public class HerramientaMapper {
         entity.setNombre(request.getNombre());
         entity.setTipo(request.getTipo());
         entity.setMarca(request.getMarca());
-        entity.setEstado(request.getEstado());
+        entity.setEstadoId(request.getEstadoId());
         entity.setCompra(request.getCompra());
         entity.setVidaUtil(request.getVidaUtil());
         entity.setFechaInicio(request.getFechaInicio());
@@ -37,20 +37,21 @@ public class HerramientaMapper {
                 entity.getNombre(),
                 entity.getTipo(),
                 entity.getMarca(),
-                entity.getEstado(),
+                entity.getEstadoId(),
+                null, // Se llenará en el Service con Feign
                 entity.getCompra(),
                 entity.getFechaInicio(),
-                entity.getVidaUtil(),
                 entity.getImagenUrl(),
-                diasRestantes
-        );
+                entity.getVidaUtil(),
+                        diasRestantes
+                );
     }
 
     public void updateEntity(HerramientaEntity entity, HerramientaRequest request) {
         entity.setNombre(request.getNombre());
         entity.setTipo(request.getTipo());
         entity.setMarca(request.getMarca());
-        entity.setEstado(request.getEstado());
+        entity.setEstadoId(request.getEstadoId());
         entity.setCompra(request.getCompra());
         entity.setVidaUtil(request.getVidaUtil());
         entity.setFechaInicio(request.getFechaInicio());
