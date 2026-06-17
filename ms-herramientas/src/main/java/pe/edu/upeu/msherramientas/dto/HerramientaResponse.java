@@ -10,74 +10,64 @@ public class HerramientaResponse {
     private String marca;
     private String estado;
     private LocalDate compra;
-    private String vidaUtil;
+
+    // 1. NUEVOS CAMPOS AÑADIDOS
+    private LocalDate fechaInicio;
+    private String imagenUrl;
+
+    // 2. CORREGIDO A INTEGER
+    private Integer vidaUtil;
+
+    // 3. CAMPO CALCULADO: ¡Para que tu frontend no sufra haciendo matemáticas!
+    private Long diasRestantes;
 
     public HerramientaResponse() {
     }
 
-    public HerramientaResponse(Long id, String nombre, String tipo, String marca, String estado, LocalDate compra, String vidaUtil) {
+    public HerramientaResponse(Long id, String nombre, String tipo, String marca, String estado,
+                               LocalDate compra, LocalDate fechaInicio, Integer vidaUtil,
+                               String imagenUrl, Long diasRestantes) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.marca = marca;
         this.estado = estado;
         this.compra = compra;
+        this.fechaInicio = fechaInicio;
         this.vidaUtil = vidaUtil;
+        this.imagenUrl = imagenUrl;
+        this.diasRestantes = diasRestantes;
     }
 
-    public Long getId() {
-        return id;
-    }
+    // --- GETTERS Y SETTERS ---
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public String getTipo() {
-        return tipo;
-    }
+    public String getMarca() { return marca; }
+    public void setMarca(String marca) { this.marca = marca; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public String getMarca() {
-        return marca;
-    }
+    public LocalDate getCompra() { return compra; }
+    public void setCompra(LocalDate compra) { this.compra = compra; }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+    public LocalDate getFechaInicio() { return fechaInicio; }
+    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
 
-    public String getEstado() {
-        return estado;
-    }
+    public Integer getVidaUtil() { return vidaUtil; }
+    public void setVidaUtil(Integer vidaUtil) { this.vidaUtil = vidaUtil; }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
-    public LocalDate getCompra() {
-        return compra;
-    }
-
-    public void setCompra(LocalDate compra) {
-        this.compra = compra;
-    }
-
-    public String getVidaUtil() {
-        return vidaUtil;
-    }
-
-    public void setVidaUtil(String vidaUtil) {
-        this.vidaUtil = vidaUtil;
-    }
+    public Long getDiasRestantes() { return diasRestantes; }
+    public void setDiasRestantes(Long diasRestantes) { this.diasRestantes = diasRestantes; }
 }

@@ -1,7 +1,6 @@
 package pe.edu.upeu.msherramientas.dto;
 
 import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 
 public class HerramientaRequest {
@@ -22,13 +21,33 @@ public class HerramientaRequest {
     @Size(max = 50, message = "El estado no debe exceder 50 caracteres")
     private String estado;
 
+    @NotNull(message = "La fecha de compra es obligatoria")
     private LocalDate compra;
 
-    @NotBlank(message = "La vida útil es obligatoria")
-    @Size(max = 100, message = "La vida útil no debe exceder 100 caracteres")
-    private String vidaUtil;
+    // 1. NUEVO CAMPO AÑADIDO
+    @NotNull(message = "La fecha de inicio de uso es obligatoria")
+    private LocalDate fechaInicio;
+
+    // 2. CORREGIDO A INTEGER CON VALIDACIÓN NUMÉRICA
+    @NotNull(message = "La vida útil es obligatoria")
+    @Min(value = 1, message = "La vida útil debe ser de al menos 1 mes")
+    private Integer vidaUtil;
+
+    // 3. CAMPO OPCIONAL PARA LA IMAGEN (Sin validaciones estrictas porque puede venir vacío)
+    private String imagenUrl;
 
     public HerramientaRequest() {
+    }
+
+    public HerramientaRequest(String nombre, String tipo, String marca, String estado, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.marca = marca;
+        this.estado = estado;
+        this.compra = compra;
+        this.fechaInicio = fechaInicio;
+        this.vidaUtil = vidaUtil;
+        this.imagenUrl = imagenUrl;
     }
 
     public String getNombre() {
@@ -71,11 +90,27 @@ public class HerramientaRequest {
         this.compra = compra;
     }
 
-    public String getVidaUtil() {
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Integer getVidaUtil() {
         return vidaUtil;
     }
 
-    public void setVidaUtil(String vidaUtil) {
+    public void setVidaUtil(Integer vidaUtil) {
         this.vidaUtil = vidaUtil;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 }
