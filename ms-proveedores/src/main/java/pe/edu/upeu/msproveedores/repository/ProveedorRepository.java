@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProveedorRepository extends JpaRepository<ProveedorEntity,Long> {
-    // Método para la búsqueda por nombre (Like ignore case)
+
     List<ProveedorEntity> findByNombresContainingIgnoreCase(String nombres);
+
+
+    boolean existsByNombresIgnoreCase(String nombres);
+
+
     Optional<ProveedorEntity> findByNombresAndApellidos(String nombres, String apellidos);
 }

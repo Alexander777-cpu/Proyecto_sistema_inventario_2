@@ -2,11 +2,14 @@ package pe.edu.upeu.msaccesorios.entity;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "accesorios")
 public class AccesorioEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "NOMBRE", nullable = false, length = 100)
@@ -21,27 +24,32 @@ public class AccesorioEntity {
     @Column(name = "STOCK", nullable = false)
     private Integer stock;
 
-    @Column(name = "CATEGORIA", nullable = false, length = 50)
-    private String categoria;
+    // SOLO SE MODIFICÓ ESTO: Ahora es un Long para guardar el ID del otro microservicio
+    @Column(name = "CATEGORIA_ID", nullable = false)
+    private Long categoriaId;
 
     @Column(name = "MARCA", nullable = false, length = 50)
     private String marca;
 
-    @Column(name = "ESTADO", nullable = false, length = 20)
-    private String estado;
+    @Column(name = "ESTADO_ID", nullable = false)
+    private Long estadoId;
+
+    @Column(name = "IMAGEN_URL")
+    private String imagenUrl;
 
     public AccesorioEntity() {
     }
 
-    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, String categoria, String marca, String estado) {
+    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, Long categoriaId, String marca, Long estadoId, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
-        this.categoria = categoria;
+        this.categoriaId = categoriaId;
         this.marca = marca;
-        this.estado = estado;
+        this.estadoId = estadoId;
+        this.imagenUrl = imagenUrl;
     }
 
     public Long getId() {
@@ -84,12 +92,12 @@ public class AccesorioEntity {
         this.stock = stock;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public String getMarca() {
@@ -100,11 +108,19 @@ public class AccesorioEntity {
         this.marca = marca;
     }
 
-    public String getEstado() {
-        return estado;
+    public Long getEstadoId() {
+        return estadoId;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstadoId(Long estadoId) {
+        this.estadoId = estadoId;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 }

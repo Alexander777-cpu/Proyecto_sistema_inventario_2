@@ -21,7 +21,6 @@ public class HerramientaEntity {
     @Column(name = "MARCA", nullable = false, length = 100)
     private String marca;
 
-    // CORREGIDO: Ahora es un Long, sin el 'length = 100'
     @Column(name = "ESTADO_ID", nullable = false)
     private Long estadoId;
 

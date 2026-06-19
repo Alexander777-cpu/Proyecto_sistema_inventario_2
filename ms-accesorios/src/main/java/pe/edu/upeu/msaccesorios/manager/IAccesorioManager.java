@@ -6,9 +6,8 @@ import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
 import java.util.List;
 
 public interface IAccesorioManager {
-    List<AccesorioResponse> listar();
-    AccesorioResponse buscarPorId(Long id);
-    AccesorioResponse crear(AccesorioRequest request);
-    AccesorioResponse actualizar(Long id, AccesorioRequest request);
-    void eliminar(Long id);
+    String validarEstadoExterno(Long estadoId) throws Exception;
+
+
+    String validarCategoriaExterna(Long categoriaId) throws Exception;
 }

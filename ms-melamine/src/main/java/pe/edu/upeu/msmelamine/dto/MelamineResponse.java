@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 public class MelamineResponse {
 
     private Long id;
+
+    // Atributo agregado
+    private String nombre;
+
     private BigDecimal ancho;
     private BigDecimal largo;
     private String color;
@@ -13,20 +17,22 @@ public class MelamineResponse {
     private Long estadoId;
     private String estadoNombre;
 
-    private String foto;
+    // Cambiado de foto a imagenUrl
+    private String imagenUrl;
 
     public MelamineResponse() {
     }
 
-    public MelamineResponse(Long id, BigDecimal ancho, BigDecimal largo, String color, String marca, Long estadoId, String estadoNombre, String foto) {
+    public MelamineResponse(Long id, String nombre, BigDecimal ancho, BigDecimal largo, String color, String marca, Long estadoId, String estadoNombre, String imagenUrl) {
         this.id = id;
+        this.nombre = nombre;
         this.ancho = ancho;
         this.largo = largo;
         this.color = color;
         this.marca = marca;
         this.estadoId = estadoId;
         this.estadoNombre = estadoNombre;
-        this.foto = foto;
+        this.imagenUrl = imagenUrl;
     }
 
     public Long getId() {
@@ -35,6 +41,14 @@ public class MelamineResponse {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public BigDecimal getAncho() {
@@ -85,11 +99,11 @@ public class MelamineResponse {
         this.estadoNombre = estadoNombre;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 }

@@ -16,13 +16,13 @@ public class ProveedorResponse {
 
     private String direccion;
     private String ubicacion;
-    private String foto;
+    private String imagenUrl;
     private String descripcion;
 
     public ProveedorResponse() {
     }
 
-    public ProveedorResponse(Long id, String nombres, String apellidos, Integer telefono, Long categoriaId, String categoriaNombre, String direccion, String ubicacion, String foto, String descripcion) {
+    public ProveedorResponse(Long id, String nombres, String apellidos, Integer telefono, Long categoriaId, String categoriaNombre, String direccion, String ubicacion, String imagenUrl, String descripcion) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -31,7 +31,7 @@ public class ProveedorResponse {
         this.categoriaNombre = categoriaNombre;
         this.direccion = direccion;
         this.ubicacion = ubicacion;
-        this.foto = foto;
+        this.imagenUrl = imagenUrl; // Modificado aquí
         this.descripcion = descripcion;
     }
 
@@ -99,12 +99,12 @@ public class ProveedorResponse {
         this.ubicacion = ubicacion;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     public String getDescripcion() {

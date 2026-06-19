@@ -6,42 +6,48 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "melamine")
-
 public class MelamineEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "ANCHO", length = 100, nullable = false)
+    // Atributo agregado para mantener el estándar de los otros microservicios
+    @Column(name = "NOMBRE", nullable = false, length = 100)
+    private String nombre;
+
+    @Column(name = "ANCHO", nullable = false)
     private BigDecimal ancho;
 
-    @Column(name = "LARGO", length = 100, nullable = false)
+    @Column(name = "LARGO", nullable = false)
     private BigDecimal largo;
 
-    @Column(name = "COLOR", length = 100, nullable = false)
+    @Column(name = "COLOR", nullable = false, length = 100)
     private String color;
 
-    @Column(name = "MARCA", length = 100, nullable = false)
+    @Column(name = "MARCA", nullable = false, length = 100)
     private String marca;
 
     @Column(name = "ESTADO_ID", nullable = false)
     private Long estadoId;
 
-    @Column(name = "FOTO", length = 500, nullable = false)
-    private String foto;
+    // Estandarizado a imagenUrl (igual que en Herramienta)
+    @Column(name = "IMAGEN_URL")
+    private String imagenUrl;
 
     public MelamineEntity() {
     }
 
-    public MelamineEntity(Long id, BigDecimal ancho, BigDecimal largo, String color, String marca, Long estadoId, String foto) {
+    public MelamineEntity(Long id, String nombre, BigDecimal ancho, BigDecimal largo, String color, String marca, Long estadoId, String imagenUrl) {
         this.id = id;
+        this.nombre = nombre;
         this.ancho = ancho;
         this.largo = largo;
         this.color = color;
         this.marca = marca;
         this.estadoId = estadoId;
-        this.foto = foto;
+        this.imagenUrl = imagenUrl;
     }
 
     public Long getId() {
@@ -50,6 +56,14 @@ public class MelamineEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public BigDecimal getAncho() {
@@ -92,12 +106,11 @@ public class MelamineEntity {
         this.estadoId = estadoId;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
-
 }

@@ -1,5 +1,10 @@
 package pe.edu.upeu.msproveedores.service;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import pe.edu.upeu.msproveedores.clients.CategoriaClient;
 import pe.edu.upeu.msproveedores.dto.CategoriaResponse;
 import pe.edu.upeu.msproveedores.dto.ProveedorRequest;
@@ -9,23 +14,24 @@ import pe.edu.upeu.msproveedores.errors.ProveedorNotFoundException;
 import pe.edu.upeu.msproveedores.manager.IProveedorManager;
 import pe.edu.upeu.msproveedores.mapper.ProveedorMapper;
 import pe.edu.upeu.msproveedores.repository.ProveedorRepository;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-
-public class ProveedorService implements IProveedorService {
+public class ProveedorService  {
 
     private final ProveedorRepository repository;
     private final ProveedorMapper mapper;
     private final IProveedorManager manager;
     private final CategoriaClient categoriaClient;
 
-    @Autowired // 👈 2. La inyectamos en el constructor
+    @Autowired
     public ProveedorService(ProveedorRepository repository, ProveedorMapper mapper,
                             IProveedorManager manager, CategoriaClient categoriaClient) {
         this.repository = repository;
@@ -34,11 +40,29 @@ public class ProveedorService implements IProveedorService {
         this.categoriaClient = categoriaClient;
     }
 
-    @Override
+    // Método para guardar archivo y generar URL
+    private String guardarImagen(MultipartFile archivo) {
+        if (archivo != null && !archivo.isEmpty()) {
+            try {
+                Path directorio = Paths.get("uploads");
+                if (!Files.exists(directorio)) {
+                    Files.createDirectories(directorio);
+                }
+                String nombreArchivo = System.currentTimeMillis() + "_" + archivo.getOriginalFilename();
+                Path rutaFisica = directorio.resolve(nombreArchivo).toAbsolutePath();
+                Files.copy(archivo.getInputStream(), rutaFisica, StandardCopyOption.REPLACE_EXISTING);
+                return "/uploads/" + nombreArchivo;
+            } catch (IOException e) {
+                throw new RuntimeException("Error al guardar la imagen", e);
+            }
+        }
+        return null;
+    }
+
+    // Se quitó el @Override
     public List<ProveedorResponse> listar() {
         return repository.findAll().stream().map(entity -> {
             ProveedorResponse res = mapper.toResponse(entity);
-            // 🚀 Llenamos el nombre de la categoría para cada elemento de la lista
             try {
                 CategoriaResponse cat = categoriaClient.buscarPorId(entity.getCategoriaId());
                 res.setCategoriaNombre(cat.getNombre());
@@ -49,13 +73,12 @@ public class ProveedorService implements IProveedorService {
         }).collect(Collectors.toList());
     }
 
-    @Override
+    // Se quitó el @Override
     public ProveedorResponse buscarPorId(Long id) {
         ProveedorEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ProveedorNotFoundException(id));
 
         ProveedorResponse res = mapper.toResponse(entity);
-        // 🚀 Llenamos el nombre para la respuesta individual
         try {
             CategoriaResponse cat = categoriaClient.buscarPorId(entity.getCategoriaId());
             res.setCategoriaNombre(cat.getNombre());
@@ -65,49 +88,53 @@ public class ProveedorService implements IProveedorService {
         return res;
     }
 
-    @Override
+    // Se quitó el @Override
     @CircuitBreaker(name = "proveedoresCB", fallbackMethod = "fallbackMethod")
-    public ProveedorResponse crear(ProveedorRequest request) throws Exception {
-        // Validación de duplicados
+    public ProveedorResponse crear(ProveedorRequest request, MultipartFile imagen) throws Exception {
         repository.findByNombresAndApellidos(request.getNombres(), request.getApellidos()).ifPresent(p -> {
             throw new IllegalArgumentException("Ya existe un proveedor con ese nombre: " + request.getNombres());
         });
 
-        // Validación externa vía Manager (Tu lógica se mantiene intacta)
         manager.validarCategoriaExterno(request.getCategoriaId());
 
-        // 3. 🚀 PROCESO DE GUARDADO Y LLENADO DE NOMBRE
+        // Seteamos la URL en el request antes de mapear
+        String urlImagen = guardarImagen(imagen);
+        request.setImagenUrl(urlImagen);
+
         ProveedorEntity entity = mapper.toEntity(request);
         ProveedorResponse response = mapper.toResponse(repository.save(entity));
 
-        // Traemos el nombre desde el microservicio de categorías usando Feign
         CategoriaResponse cat = categoriaClient.buscarPorId(request.getCategoriaId());
-        response.setCategoriaNombre(cat.getNombre()); // 👈 Aquí le quitamos el 'null'
+        response.setCategoriaNombre(cat.getNombre());
 
         return response;
     }
 
-    // Método Fallback para el Circuit Breaker
-    public ProveedorResponse fallbackMethod(ProveedorRequest request, Exception e) {
-        // Imprime esto para que veas el error real en la consola de IntelliJ
+    public ProveedorResponse fallbackMethod(ProveedorRequest request, MultipartFile imagen, Exception e) {
         System.err.println("Causa del Fallback: " + e.getMessage());
         e.printStackTrace();
 
         ProveedorResponse response = new ProveedorResponse();
         response.setId(0L);
-        response.setNombres("FALLBACK: " + e.getMessage()); // Agrega el mensaje al JSON
+        response.setNombres("FALLBACK: " + e.getMessage());
         return response;
     }
 
-    @Override
-    public ProveedorResponse actualizar(Long id, ProveedorRequest request) {
+    // Se quitó el @Override
+    public ProveedorResponse actualizar(Long id, ProveedorRequest request, MultipartFile imagen) {
         ProveedorEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ProveedorNotFoundException(id));
+
+        // Lógica para actualizar URL de imagen
+        if (imagen != null && !imagen.isEmpty()) {
+            request.setImagenUrl(guardarImagen(imagen));
+        } else {
+            request.setImagenUrl(entity.getImagenUrl());
+        }
 
         mapper.updateEntity(entity, request);
         ProveedorResponse res = mapper.toResponse(repository.save(entity));
 
-        // 🚀 También podemos llenar el nombre en el actualizar
         try {
             CategoriaResponse cat = categoriaClient.buscarPorId(request.getCategoriaId());
             res.setCategoriaNombre(cat.getNombre());
@@ -117,14 +144,14 @@ public class ProveedorService implements IProveedorService {
         return res;
     }
 
-    @Override
+    // Se quitó el @Override
     public void eliminar(Long id) {
         ProveedorEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ProveedorNotFoundException(id));
         repository.delete(entity);
     }
 
-    @Override
+    // Se quitó el @Override
     public List<ProveedorResponse> buscarPorNombre(String nombres) {
         return repository.findByNombresContainingIgnoreCase(nombres)
                 .stream()

@@ -8,8 +8,13 @@ import java.util.Optional;
 
 public interface AccesorioRepository extends JpaRepository<AccesorioEntity, Long> {
     List<AccesorioEntity> findByNombreContainingIgnoreCase(String nombre);
-    List<AccesorioEntity> findByEstado(String estado);
-    List<AccesorioEntity> findByCategoria(String categoria);
+
+    List<AccesorioEntity> findByEstadoId(Long estadoId);
+
+
+    List<AccesorioEntity> findByCategoriaId(Long categoriaId);
+
     List<AccesorioEntity> findByStockGreaterThan(Integer stock);
+
     Optional<AccesorioEntity> findByNombreIgnoreCase(String nombre);
 }

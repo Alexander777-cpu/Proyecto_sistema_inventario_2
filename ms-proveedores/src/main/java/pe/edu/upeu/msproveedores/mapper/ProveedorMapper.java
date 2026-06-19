@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProveedorMapper {
-
     public ProveedorEntity toEntity(ProveedorRequest request) {
         ProveedorEntity entity = new ProveedorEntity();
         entity.setNombres(request.getNombres());
@@ -16,7 +15,8 @@ public class ProveedorMapper {
         entity.setCategoriaId(request.getCategoriaId());
         entity.setDireccion(request.getDireccion());
         entity.setUbicacion(request.getUbicacion());
-        entity.setFoto(request.getFoto());
+
+        entity.setImagenUrl(request.getImagenUrl());
         entity.setDescripcion(request.getDescripcion());
         return entity;
     }
@@ -31,7 +31,8 @@ public class ProveedorMapper {
                 null,
                 entity.getDireccion(),
                 entity.getUbicacion(),
-                entity.getFoto(),
+
+                entity.getImagenUrl(),
                 entity.getDescripcion()
         );
     }
@@ -43,7 +44,8 @@ public class ProveedorMapper {
         entity.setCategoriaId(request.getCategoriaId());
         entity.setDireccion(request.getDireccion());
         entity.setUbicacion(request.getUbicacion());
-        entity.setFoto(request.getFoto());
+
+        entity.setImagenUrl(request.getImagenUrl());
         entity.setDescripcion(request.getDescripcion());
     }
 

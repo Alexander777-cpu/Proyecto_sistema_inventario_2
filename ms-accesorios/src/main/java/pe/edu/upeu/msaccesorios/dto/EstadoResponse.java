@@ -1,9 +1,8 @@
-package pe.edu.upeu.msmelamine.dto;
+package pe.edu.upeu.msaccesorios.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EstadoResponse {
-
     private Long id;
 
     @JsonProperty("nombre")
@@ -32,5 +31,4 @@ public class EstadoResponse {
     public void setEstadoNombre(String estadoNombre) {
         this.estadoNombre = estadoNombre;
     }
-
 }

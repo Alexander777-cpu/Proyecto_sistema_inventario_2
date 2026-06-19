@@ -1,12 +1,14 @@
 package pe.edu.upeu.msproveedores.controller;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upeu.msproveedores.dto.ProveedorRequest;
 import pe.edu.upeu.msproveedores.dto.ProveedorResponse;
-import pe.edu.upeu.msproveedores.service.IProveedorService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upeu.msproveedores.service.ProveedorService;
 
 import java.util.List;
 
@@ -16,9 +18,9 @@ import java.util.List;
 
 public class ProveedorController {
 
-    private final IProveedorService service;
+    private final ProveedorService service;
 
-    public ProveedorController(IProveedorService service) {
+    public ProveedorController(ProveedorService service) {
         this.service = service;
     }
 
@@ -34,22 +36,37 @@ public class ProveedorController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    // 3. Buscar por Nombre (El que faltaba)
+    // 3. Buscar por Nombre
     @GetMapping("/buscar")
     public ResponseEntity<List<ProveedorResponse>> buscarPorNombre(@RequestParam String nombres) {
         return ResponseEntity.ok(service.buscarPorNombre(nombres));
     }
 
-    // 4. Crear nuevo proveedor
-    @PostMapping
-    public ResponseEntity<ProveedorResponse> crear(@Valid @RequestBody ProveedorRequest request) throws Exception {
-        return new ResponseEntity<>(service.crear(request), HttpStatus.CREATED);
+    /**
+     * IMPORTANTE: Al enviar desde Postman:
+     * 1. En Body -> form-data
+     * 2. Key: 'proveedor', Value: (tu JSON), Content-Type: application/json
+     * 3. Key: 'imagen', Value: (archivo), Content-Type: image/png (o jpg)
+     */
+    // 4. Crear nuevo proveedor (Modificado para recibir imagen)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProveedorResponse> crear(
+            @RequestPart(value = "proveedor") @Valid ProveedorRequest request,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
+
+        ProveedorResponse creado = service.crear(request, imagen);
+        return new ResponseEntity<>(creado, HttpStatus.CREATED);
     }
 
-    // 5. Actualizar proveedor
-    @PutMapping("/{id}")
-    public ResponseEntity<ProveedorResponse> actualizar(@PathVariable Long id, @Valid @RequestBody ProveedorRequest request) {
-        return ResponseEntity.ok(service.actualizar(id, request));
+    // 5. Actualizar proveedor (Modificado para recibir imagen)
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProveedorResponse> actualizar(
+            @PathVariable Long id,
+            @RequestPart(value = "proveedor") @Valid ProveedorRequest request,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception { // Se agregó throws Exception por si acaso
+
+        ProveedorResponse actualizado = service.actualizar(id, request, imagen);
+        return ResponseEntity.ok(actualizado);
     }
 
     // 6. Eliminar proveedor

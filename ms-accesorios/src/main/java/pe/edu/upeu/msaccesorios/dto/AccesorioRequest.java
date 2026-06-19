@@ -12,21 +12,42 @@ public class AccesorioRequest {
     @Size(min = 5, max = 255, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String descripcion;
 
-    @NotBlank(message = "El precio es obligatorio — debe ser un número decimal")
-    private String precio;
+    @NotNull(message = "El precio es obligatorio")
+    @Positive(message = "El precio debe ser mayor a 0")
+    @DecimalMax(value = "999.99", message = "El precio no puede exceder 999.99")
+    private Double precio;
 
-    @NotBlank(message = "El stock es obligatorio — debe ser un número entero")
-    private String stock;
+    @NotNull(message = "El stock es obligatorio")
+    @Min(value = 1, message = "El stock debe ser de al menos 1 unidad")
+    @Max(value = 1000, message = "El stock no puede exceder 1000 unidades")
+    private Integer stock;
 
-    @NotBlank(message = "La categoría es obligatoria")
-    @Size(min = 2, max = 50, message = "La categoría debe tener entre 2 y 50 caracteres")
-    private String categoria;
+    // SOLO SE MODIFICÓ ESTO: Ahora es un Long y se valida con @NotNull
+    @NotNull(message = "El ID de la categoría es obligatorio")
+    private Long categoriaId;
 
     @NotBlank(message = "La marca es obligatoria")
     @Size(min = 2, max = 50, message = "La marca debe tener entre 2 y 50 caracteres")
     private String marca;
 
+    // AHORA ES UN LONG (Para coincidir con tu arquitectura de ms-estado)
+    @NotNull(message = "El ID del estado es obligatorio")
+    private Long estadoId;
+
+    private String imagenUrl;
+
     public AccesorioRequest() {
+    }
+
+    public AccesorioRequest(String nombre, String descripcion, Double precio, Integer stock, Long categoriaId, String marca, Long estadoId, String imagenUrl) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+        this.categoriaId = categoriaId;
+        this.marca = marca;
+        this.estadoId = estadoId;
+        this.imagenUrl = imagenUrl;
     }
 
     public String getNombre() {
@@ -45,28 +66,28 @@ public class AccesorioRequest {
         this.descripcion = descripcion;
     }
 
-    public String getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
-    public String getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public String getMarca() {
@@ -77,19 +98,19 @@ public class AccesorioRequest {
         this.marca = marca;
     }
 
-    public Double getPrecioAsDouble() {
-        if (precio == null) return null;
-        double valor = Double.parseDouble(precio);
-        if (valor <= 0) throw new IllegalArgumentException("El precio debe ser mayor a 0");
-        if (valor > 999.99) throw new IllegalArgumentException("El precio no puede exceder 999.99");
-        return valor;
+    public Long getEstadoId() {
+        return estadoId;
     }
 
-    public Integer getStockAsInteger() {
-        if (stock == null) return null;
-        int valor = Integer.parseInt(stock);
-        if (valor < 1) throw new IllegalArgumentException("El stock debe ser mayor a 0");
-        if (valor > 1000) throw new IllegalArgumentException("El stock no puede exceder 1000 unidades");
-        return valor;
+    public void setEstadoId(Long estadoId) {
+        this.estadoId = estadoId;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 }

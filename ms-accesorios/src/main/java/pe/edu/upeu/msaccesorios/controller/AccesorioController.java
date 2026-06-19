@@ -1,12 +1,11 @@
 package pe.edu.upeu.msaccesorios.controller;
 
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upeu.msaccesorios.dto.AccesorioRequest;
 import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
 import pe.edu.upeu.msaccesorios.service.AccesorioService;
@@ -16,11 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accesorios")
 public class AccesorioController {
-
-    private static final Logger log = LoggerFactory.getLogger(AccesorioController.class);
-
-    @Value("${server.port}")
-    private String puerto;
 
     private final AccesorioService service;
 
@@ -38,44 +32,45 @@ public class AccesorioController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
+    /**
+     * IMPORTANTE: Al enviar desde Postman:
+     * 1. En Body -> form-data
+     * 2. Key: 'accesorio', Value: (tu JSON), Content-Type: application/json
+     * 3. Key: 'imagen', Value: (archivo), Content-Type: image/png (o jpg)
+     */
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AccesorioResponse> crear(
+            @RequestPart(value = "accesorio") @Valid AccesorioRequest request,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
+
+        AccesorioResponse creado = service.crear(request, imagen);
+        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AccesorioResponse> actualizar(
+            @PathVariable Long id,
+            @RequestPart(value = "accesorio") @Valid AccesorioRequest request,
+            @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
+
+        AccesorioResponse actualizado = service.actualizar(id, request, imagen);
+        return ResponseEntity.ok(actualizado);
+    }
+
     @GetMapping("/buscar")
-    public ResponseEntity<?> buscarPorNombre(@RequestParam String nombre) {
-        try {
-            return ResponseEntity.ok(service.buscarPorNombre(nombre));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(java.util.Map.of("error", e.getMessage()));
-        }
+    public ResponseEntity<List<AccesorioResponse>> buscarPorNombre(@RequestParam String nombre) {
+        return ResponseEntity.ok(service.buscarPorNombre(nombre));
     }
 
-    @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<?> buscarPorCategoria(@PathVariable String categoria) {
-        try {
-            return ResponseEntity.ok(service.buscarPorCategoria(categoria));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(java.util.Map.of("error", e.getMessage()));
-        }
-    }
-
-    @PostMapping
-    public ResponseEntity<?> crear(@Valid @RequestBody AccesorioRequest request) {
-        try {
-            return new ResponseEntity<>(service.crear(request), HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(java.util.Map.of("error", e.getMessage()));
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<AccesorioResponse> actualizar(@PathVariable Long id, @Valid @RequestBody AccesorioRequest request) {
-        return ResponseEntity.ok(service.actualizar(id, request));
+    // SOLO SE MODIFICÓ ESTO: Ahora recibe el categoriaId (Long) en la ruta
+    @GetMapping("/categoria/{categoriaId}")
+    public ResponseEntity<List<AccesorioResponse>> buscarPorCategoriaId(@PathVariable Long categoriaId) {
+        return ResponseEntity.ok(service.buscarPorCategoriaId(categoriaId));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         service.eliminar(id);
-        return ResponseEntity.ok(java.util.Map.of("mensaje", "Accesorio con id " + id + " eliminado correctamente"));
+        return ResponseEntity.noContent().build();
     }
 }

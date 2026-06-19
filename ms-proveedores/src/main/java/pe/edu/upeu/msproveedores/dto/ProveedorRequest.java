@@ -28,9 +28,8 @@ public class ProveedorRequest {
     @Size(max = 100, message = "La ubicación no debe exceder 100 caracteres")
     private String ubicacion;
 
-    @NotBlank(message = "La foto es obligatorio")
-    @Size(max = 500, message = "La foto no debe exceder 100 caracteres")
-    private String foto;
+
+    private String imagenUrl;
 
     @NotBlank(message = "La descripción es obligatorio")
     @Size(max = 200, message = "La descripción no debe exceder 200 caracteres")
@@ -39,14 +38,14 @@ public class ProveedorRequest {
     public ProveedorRequest() {
     }
 
-    public ProveedorRequest(String nombres, String apellidos, Integer telefono, long categoriaId, String direccion, String ubicacion, String foto, String descripcion) {
+    public ProveedorRequest(String nombres, String apellidos, Integer telefono, long categoriaId, String direccion, String ubicacion, String imagenUrl, String descripcion) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.categoriaId = categoriaId;
         this.direccion = direccion;
         this.ubicacion = ubicacion;
-        this.foto = foto;
+        this.imagenUrl = imagenUrl;
         this.descripcion = descripcion;
     }
 
@@ -98,12 +97,12 @@ public class ProveedorRequest {
         this.ubicacion = ubicacion;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     public String getDescripcion() {

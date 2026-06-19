@@ -11,35 +11,40 @@ public class MelamineMapper {
 
     public MelamineEntity toEntity(MelamineRequest request) {
         MelamineEntity entity = new MelamineEntity();
+        // Se agregaron nombre e imagenUrl
+        entity.setNombre(request.getNombre());
         entity.setAncho(request.getAncho());
         entity.setLargo(request.getLargo());
         entity.setColor(request.getColor());
         entity.setMarca(request.getMarca());
         entity.setEstadoId(request.getEstadoId());
-        entity.setFoto(request.getFoto());
+        entity.setImagenUrl(request.getImagenUrl());
         return entity;
     }
 
     public MelamineResponse toResponse(MelamineEntity entity) {
-        MelamineResponse res = new MelamineResponse();
-        res.setId(entity.getId());
-        res.setAncho(entity.getAncho());
-        res.setLargo(entity.getLargo());
-        res.setColor(entity.getColor());
-        res.setMarca(entity.getMarca());
-        res.setEstadoId(entity.getEstadoId());
-        res.setEstadoNombre(null); // 👈 Se llenará en el Service
-        res.setFoto(entity.getFoto());
-        return res;
+        // Usamos el constructor para mantener el mismo estilo de HerramientaMapper
+        return new MelamineResponse(
+                entity.getId(),
+                entity.getNombre(),
+                entity.getAncho(),
+                entity.getLargo(),
+                entity.getColor(),
+                entity.getMarca(),
+                entity.getEstadoId(),
+                null, // Se llenará en el Service con Feign
+                entity.getImagenUrl()
+        );
     }
 
     public void updateEntity(MelamineEntity entity, MelamineRequest request) {
+        // Se agregaron nombre e imagenUrl
+        entity.setNombre(request.getNombre());
         entity.setAncho(request.getAncho());
         entity.setLargo(request.getLargo());
         entity.setColor(request.getColor());
         entity.setMarca(request.getMarca());
         entity.setEstadoId(request.getEstadoId());
-        entity.setFoto(request.getFoto());
+        entity.setImagenUrl(request.getImagenUrl());
     }
-
 }

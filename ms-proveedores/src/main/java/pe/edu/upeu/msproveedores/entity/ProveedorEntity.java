@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "proveedores")
-
 public class ProveedorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID") // Agregado por consistencia
     private Long id;
 
     @Column(name = "NOMBRES", length = 100, nullable = false)
@@ -20,6 +20,7 @@ public class ProveedorEntity {
     @Column(name = "TELEFONO", length = 100, nullable = false)
     private Integer telefono;
 
+    // Tu categoría se mantiene intacta, funcionando como tu "estado"
     @Column(name = "CATEGORIA_ID", nullable = false)
     private Long categoriaId;
 
@@ -29,8 +30,9 @@ public class ProveedorEntity {
     @Column(name = "URL_UBICACION", length = 500, nullable = false)
     private String ubicacion;
 
-    @Column(name = "FOTO", length = 500, nullable = false)
-    private String foto;
+    // Estandarizado a imagenUrl para la subida de archivos
+    @Column(name = "IMAGEN_URL")
+    private String imagenUrl;
 
     @Column(name = "DESCRIPCION", length = 200, nullable = false)
     private String descripcion;
@@ -38,7 +40,7 @@ public class ProveedorEntity {
     public ProveedorEntity() {
     }
 
-    public ProveedorEntity(Long id, String nombres, String apellidos, Integer telefono, Long categoriaId, String direccion, String ubicacion, String foto, String descripcion) {
+    public ProveedorEntity(Long id, String nombres, String apellidos, Integer telefono, Long categoriaId, String direccion, String ubicacion, String imagenUrl, String descripcion) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -46,7 +48,7 @@ public class ProveedorEntity {
         this.categoriaId = categoriaId;
         this.direccion = direccion;
         this.ubicacion = ubicacion;
-        this.foto = foto;
+        this.imagenUrl = imagenUrl;
         this.descripcion = descripcion;
     }
 
@@ -106,12 +108,12 @@ public class ProveedorEntity {
         this.ubicacion = ubicacion;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     public String getDescripcion() {
