@@ -16,9 +16,9 @@ public class CloudinaryService {
         // NOTA: Estas credenciales deben ser reemplazadas por las que
         // les dio el Dashboard de Cloudinary.
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "tu_cloud_name",
-                "api_key", "tu_api_key",
-                "api_secret", "tu_api_secret"
+                "cloud_name", "dz64gzrk1",                   // "tu_cloud_name"
+                "api_key", "465483216322983",                        // "tu_api_key"
+                "api_secret", "wHw_0n32j1BMKVxrICZZVk5misg"          // "tu_api_secret"
         ));
     }
 
