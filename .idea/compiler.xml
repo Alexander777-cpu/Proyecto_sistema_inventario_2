@@ -22,7 +22,7 @@
         </processorPath>
         <module name="auth-service" />
       </profile>
-      <profile name="Annotation profile for ms-accesorios" enabled="true">
+      <profile name="Annotation profile for ms-proveedores" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

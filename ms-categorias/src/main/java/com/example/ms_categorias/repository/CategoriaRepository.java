@@ -11,3 +11,4 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Long
     Optional<CategoriaEntity> findByNombre(String nombre);
 
 }
+ 
