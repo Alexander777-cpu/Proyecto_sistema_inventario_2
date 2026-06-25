@@ -2,7 +2,7 @@ spring:
   application:
     name: ms-proveedores
   config:
-    import: "optional:configserver:http://localhost:8088"
+    import: "optional:configserver:http://localhost:8091"
   datasource:
     # MySQL en Docker puerto 3307
     url: jdbc:mysql://localhost:3307/db_proveedores?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
@@ -60,7 +60,3 @@ resilience4j:
       # IMPORTANTE: Este nombre debe coincidir con @CircuitBreaker(name = "proveedoresCB")
       proveedoresCB:
         baseConfig: default
-
-app:
-  upload:
-    dir: uploads

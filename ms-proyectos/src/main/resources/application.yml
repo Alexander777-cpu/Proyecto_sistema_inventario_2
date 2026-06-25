@@ -2,7 +2,7 @@ spring:
   application:
     name: ms-proyectos
   config:
-    import: "optional:configserver:http://localhost:8088"
+    import: "optional:configserver:http://localhost:8091"
   datasource:
     url: jdbc:mysql://localhost:3307/db_proyectos?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
     username: root
