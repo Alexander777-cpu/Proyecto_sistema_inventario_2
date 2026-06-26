@@ -13,7 +13,6 @@ public class MelamineEntity {
     @Column(name = "ID")
     private Long id;
 
-    // Atributo agregado para mantener el estándar de los otros microservicios
     @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
@@ -32,7 +31,7 @@ public class MelamineEntity {
     @Column(name = "ESTADO_ID", nullable = false)
     private Long estadoId;
 
-    // Estandarizado a imagenUrl (igual que en Herramienta)
+    // Estandarizado a imagenUrl para la subida de archivos a la nube
     @Column(name = "IMAGEN_URL")
     private String imagenUrl;
 

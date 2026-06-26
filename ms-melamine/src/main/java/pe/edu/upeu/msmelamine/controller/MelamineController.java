@@ -22,14 +22,22 @@ public class MelamineController {
         this.service = service;
     }
 
+    // 1. Listar todos
     @GetMapping
     public ResponseEntity<List<MelamineResponse>> listar() {
         return ResponseEntity.ok(service.listar());
     }
 
+    // 2. Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<MelamineResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
+    // 3. Buscar por Nombre
+    @GetMapping("/buscar")
+    public ResponseEntity<List<MelamineResponse>> buscarPorNombre(@RequestParam String nombre) {
+        return ResponseEntity.ok(service.buscarPorNombre(nombre));
     }
 
     /**
@@ -38,6 +46,7 @@ public class MelamineController {
      * 2. Key: 'melamine', Value: (tu JSON), Content-Type: application/json
      * 3. Key: 'imagen', Value: (archivo), Content-Type: image/png (o jpg)
      */
+    // 4. Crear nueva melamina (Preparado para recibir imagen)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MelamineResponse> crear(
             @RequestPart(value = "melamine") @Valid MelamineRequest request,
@@ -47,6 +56,7 @@ public class MelamineController {
         return new ResponseEntity<>(creado, HttpStatus.CREATED);
     }
 
+    // 5. Actualizar melamina (Preparado para recibir imagen)
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MelamineResponse> actualizar(
             @PathVariable Long id,
@@ -57,11 +67,7 @@ public class MelamineController {
         return ResponseEntity.ok(actualizado);
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<List<MelamineResponse>> buscarPorNombre(@RequestParam String nombre) {
-        return ResponseEntity.ok(service.buscarPorNombre(nombre));
-    }
-
+    // 6. Eliminar melamina
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         service.eliminar(id);
