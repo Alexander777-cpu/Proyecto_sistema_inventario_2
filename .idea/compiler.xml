@@ -22,6 +22,16 @@
         </processorPath>
         <module name="auth-service" />
       </profile>
+      <profile name="Annotation profile for ms-melamine" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="ms-melamine" />
+      </profile>
       <profile name="Annotation profile for ms-proyectos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -29,15 +39,16 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="ms-categorias" />
-        <module name="ms-proveedores" />
-        <module name="ms-melamine" />
-        <module name="ms-estado" />
         <module name="ms-clientes" />
         <module name="ms-proyectos" />
+        <module name="ms-proveedores" />
         <module name="ms-accesorios" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ms-categorias" target="21" />
+      <module name="ms-estado" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

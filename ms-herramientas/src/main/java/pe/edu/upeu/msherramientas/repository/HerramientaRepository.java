@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface HerramientaRepository extends JpaRepository <HerramientaEntity, Long>  {
     List<HerramientaEntity> findByNombreContainingIgnoreCase(String nombre);
-
     boolean existsByNombreIgnoreCase(String nombre);
 }

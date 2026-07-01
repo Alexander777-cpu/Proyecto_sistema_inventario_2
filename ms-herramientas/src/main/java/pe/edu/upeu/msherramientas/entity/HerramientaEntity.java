@@ -15,14 +15,17 @@ public class HerramientaEntity {
     @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "TIPO", nullable = false, length = 100)
-    private String tipo;
+    @ManyToOne
+    @JoinColumn(name = "TIPO_ID", nullable = false)
+    private TipoHerramientaEntity tipo;
 
-    @Column(name = "MARCA", nullable = false, length = 100)
-    private String marca;
+    @ManyToOne
+    @JoinColumn(name = "MARCA_ID", nullable = false)
+    private MarcaHerramientaEntity marca;
 
-    @Column(name = "ESTADO_ID", nullable = false)
-    private Long estadoId;
+    @ManyToOne
+    @JoinColumn(name = "ESTADO_ID", nullable = false)
+    private EstadoHerramientaEntity estado;
 
     @Column(name = "FECHA_COMPRA", nullable = false)
     private LocalDate compra;
@@ -39,12 +42,12 @@ public class HerramientaEntity {
     public HerramientaEntity() {
     }
 
-    public HerramientaEntity(Long id, String nombre, String tipo, String marca, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+    public HerramientaEntity(Long id, String nombre, TipoHerramientaEntity tipo, MarcaHerramientaEntity marca, EstadoHerramientaEntity estado, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.marca = marca;
-        this.estadoId = estadoId;
+        this.estado = estado;
         this.compra = compra;
         this.fechaInicio = fechaInicio;
         this.vidaUtil = vidaUtil;
@@ -67,28 +70,28 @@ public class HerramientaEntity {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
+    public TipoHerramientaEntity getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoHerramientaEntity tipo) {
         this.tipo = tipo;
     }
 
-    public String getMarca() {
+    public MarcaHerramientaEntity getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(MarcaHerramientaEntity marca) {
         this.marca = marca;
     }
 
-    public Long getEstadoId() {
-        return estadoId;
+    public EstadoHerramientaEntity getEstado() {
+        return estado;
     }
 
-    public void setEstadoId(Long estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado(EstadoHerramientaEntity estado) {
+        this.estado = estado;
     }
 
     public LocalDate getCompra() {

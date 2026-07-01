@@ -9,15 +9,12 @@ public class HerramientaRequest {
     @Size(max = 100, message = "El nombre no debe exceder 100 caracteres")
     private String nombre;
 
-    @NotBlank(message = "El tipo es obligatorio")
-    @Size(max = 100, message = "El tipo no debe exceder 100 caracteres")
-    private String tipo;
+    @NotNull(message = "El ID del tipo es obligatorio")
+    private Long tipoId;
 
-    @NotBlank(message = "La marca es obligatoria")
-    @Size(max = 100, message = "La marca no debe exceder 100 caracteres")
-    private String marca;
+    @NotNull(message = "El ID de la marca es obligatoria")
+    private Long marcaId;
 
-    // AHORA ES UN LONG (Para que coincida con ms-estado)
     @NotNull(message = "El ID del estado es obligatorio")
     private Long estadoId;
 
@@ -36,10 +33,10 @@ public class HerramientaRequest {
     public HerramientaRequest() {
     }
 
-    public HerramientaRequest(String nombre, String tipo, String marca, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+    public HerramientaRequest(String nombre, Long tipoId, Long marcaId, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
         this.nombre = nombre;
-        this.tipo = tipo;
-        this.marca = marca;
+        this.tipoId = tipoId;
+        this.marcaId = marcaId;
         this.estadoId = estadoId;
         this.compra = compra;
         this.fechaInicio = fechaInicio;
@@ -55,20 +52,20 @@ public class HerramientaRequest {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Long getTipoId() {
+        return tipoId;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoId(Long tipoId) {
+        this.tipoId = tipoId;
     }
 
-    public String getMarca() {
-        return marca;
+    public Long getMarcaId() {
+        return marcaId;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setMarcaId(Long marcaId) {
+        this.marcaId = marcaId;
     }
 
     public Long getEstadoId() {
@@ -110,4 +107,5 @@ public class HerramientaRequest {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
+
 }

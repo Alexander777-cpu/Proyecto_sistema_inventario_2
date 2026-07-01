@@ -2,7 +2,7 @@ spring:
   application:
     name: api-gateway
   config:
-    import: "optional:configserver:http://localhost:8088"
+    import: "optional:configserver:http://localhost:8091"
   cloud:
     gateway:
       server:
@@ -12,22 +12,14 @@ spring:
               uri: lb://ms-accesorios
               predicates:
                 - Path=/api/accesorios/**
-            - id: ms-categorias
-              uri: lb://ms-categorias
-              predicates:
-                - Path=/api/categorias/**
             - id: ms-clientes
               uri: lb://ms-clientes
               predicates:
                 - Path=/api/clientes/**
-            - id: ms-estado
-              uri: lb://ms-estado
-              predicates:
-                - Path=/api/estado/**
             - id: ms-herramientas
               uri: lb://ms-herramientas
               predicates:
-                - Path=/api/herramientas/**
+                - Path=/api/herramientas/**, /api/tipos/**, /api/marcas/**, /api/estados/**
             - id: ms-melamine
               uri: lb://ms-melamine
               predicates:
