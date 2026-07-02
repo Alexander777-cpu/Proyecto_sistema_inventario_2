@@ -15,9 +15,8 @@ public class AccesorioMapper {
         entity.setDescripcion(request.getDescripcion());
         entity.setPrecio(request.getPrecio());
         entity.setStock(request.getStock());
-        // SOLO SE MODIFICÓ ESTO: Ahora recibe el categoriaId (Long)
-        entity.setCategoriaId(request.getCategoriaId());
-        entity.setMarca(request.getMarca());
+
+        entity.setMarcaId(request.getMarcaId());
         entity.setEstadoId(request.getEstadoId());
         entity.setImagenUrl(request.getImagenUrl());
         return entity;
@@ -30,11 +29,14 @@ public class AccesorioMapper {
                 entity.getDescripcion(),
                 entity.getPrecio(),
                 entity.getStock(),
-                entity.getCategoriaId(),
-                null, // categoriaNombre: Se llenará en el Service con Feign
-                entity.getMarca(),
+
+                // Agregados los 4 campos que faltaban para cumplir con el constructor:
+                entity.getMarcaId(),
+                null, // marcaNombre: se llena en el AccesorioService
+
                 entity.getEstadoId(),
-                null, // estadoNombre: Se llenará en el Service con Feign
+                null, // estadoNombre: se llena en el AccesorioService
+
                 entity.getImagenUrl()
         );
     }
@@ -44,8 +46,8 @@ public class AccesorioMapper {
         entity.setDescripcion(request.getDescripcion());
         entity.setPrecio(request.getPrecio());
         entity.setStock(request.getStock());
-        entity.setCategoriaId(request.getCategoriaId());
-        entity.setMarca(request.getMarca());
+
+        entity.setMarcaId(request.getMarcaId());
         entity.setEstadoId(request.getEstadoId());
         entity.setImagenUrl(request.getImagenUrl());
     }

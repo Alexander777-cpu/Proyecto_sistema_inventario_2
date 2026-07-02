@@ -22,34 +22,32 @@ public class AccesorioRequest {
     @Max(value = 1000, message = "El stock no puede exceder 1000 unidades")
     private Integer stock;
 
-    // SOLO SE MODIFICÓ ESTO: Ahora es un Long y se valida con @NotNull
-    @NotNull(message = "El ID de la categoría es obligatorio")
-    private Long categoriaId;
+    // Se eliminó por completo el categoriaId y su validación
 
-    @NotBlank(message = "La marca es obligatoria")
-    @Size(min = 2, max = 50, message = "La marca debe tener entre 2 y 50 caracteres")
-    private String marca;
+    @NotNull(message = "El ID de la marca es obligatorio")
+    private Long marcaId;
 
-    // AHORA ES UN LONG (Para coincidir con tu arquitectura de ms-estado)
     @NotNull(message = "El ID del estado es obligatorio")
     private Long estadoId;
 
     private String imagenUrl;
 
+    // Constructor vacío
     public AccesorioRequest() {
     }
 
-    public AccesorioRequest(String nombre, String descripcion, Double precio, Integer stock, Long categoriaId, String marca, Long estadoId, String imagenUrl) {
+    // Constructor con parámetros (actualizado sin categoriaId)
+    public AccesorioRequest(String nombre, String descripcion, Double precio, Integer stock, Long marcaId, Long estadoId, String imagenUrl) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
-        this.categoriaId = categoriaId;
-        this.marca = marca;
+        this.marcaId = marcaId;
         this.estadoId = estadoId;
         this.imagenUrl = imagenUrl;
     }
 
+    // Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -82,20 +80,12 @@ public class AccesorioRequest {
         this.stock = stock;
     }
 
-    public Long getCategoriaId() {
-        return categoriaId;
+    public Long getMarcaId() {
+        return marcaId;
     }
 
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setMarcaId(Long marcaId) {
+        this.marcaId = marcaId;
     }
 
     public Long getEstadoId() {

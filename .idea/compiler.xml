@@ -19,20 +19,11 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="auth-service" />
       </profile>
-      <profile name="Annotation profile for ms-melamine" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-        </processorPath>
-        <module name="ms-melamine" />
-      </profile>
-      <profile name="Annotation profile for ms-proyectos" enabled="true">
+      <profile name="Annotation profile for ms-accesorios" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -41,8 +32,9 @@
         </processorPath>
         <module name="ms-clientes" />
         <module name="ms-proyectos" />
-        <module name="ms-proveedores" />
         <module name="ms-accesorios" />
+        <module name="ms-proveedores" />
+        <module name="ms-melamine" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

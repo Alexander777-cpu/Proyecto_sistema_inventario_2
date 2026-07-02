@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upeu.msaccesorios.dto.AccesorioRequest;
 import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
-import pe.edu.upeu.msaccesorios.service.AccesorioService;
+import pe.edu.upeu.msaccesorios.entity.EstadoAccesorioEntity;
+import pe.edu.upeu.msaccesorios.entity.MarcaAccesorioEntity;
+import pe.edu.upeu.msaccesorios.service.IAccesorioService;
+import pe.edu.upeu.msaccesorios.service.IEstadoAccesorioService;
+import pe.edu.upeu.msaccesorios.service.IMarcaAccesorioService;
 
 import java.util.List;
 
@@ -16,11 +20,40 @@ import java.util.List;
 @RequestMapping("/api/accesorios")
 public class AccesorioController {
 
-    private final AccesorioService service;
+    private final IAccesorioService service;
 
-    public AccesorioController(AccesorioService service) {
+    // Agregamos los servicios de Marca y Estado
+    private final IEstadoAccesorioService estadoService;
+    private final IMarcaAccesorioService marcaService;
+
+    // Actualizamos el constructor para inyectarlos
+    public AccesorioController(IAccesorioService service,
+                               IEstadoAccesorioService estadoService,
+                               IMarcaAccesorioService marcaService) {
         this.service = service;
+        this.estadoService = estadoService;
+        this.marcaService = marcaService;
     }
+
+    // ==========================================
+    // NUEVOS ENDPOINTS INFALIBLES PARA MARCA Y ESTADO
+    // ==========================================
+
+    @PostMapping("/estados")
+    public ResponseEntity<EstadoAccesorioEntity> crearEstado(@RequestBody EstadoAccesorioEntity entity) {
+        EstadoAccesorioEntity creado = estadoService.crear(entity);
+        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/marcas")
+    public ResponseEntity<MarcaAccesorioEntity> crearMarca(@RequestBody MarcaAccesorioEntity entity) {
+        MarcaAccesorioEntity creado = marcaService.crear(entity);
+        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    }
+
+    // ==========================================
+    // TUS ENDPOINTS ORIGINALES DE ACCESORIO
+    // ==========================================
 
     @GetMapping
     public ResponseEntity<List<AccesorioResponse>> listar() {
@@ -32,12 +65,6 @@ public class AccesorioController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    /**
-     * IMPORTANTE: Al enviar desde Postman:
-     * 1. En Body -> form-data
-     * 2. Key: 'accesorio', Value: (tu JSON), Content-Type: application/json
-     * 3. Key: 'imagen', Value: (archivo), Content-Type: image/png (o jpg)
-     */
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AccesorioResponse> crear(
             @RequestPart(value = "accesorio") @Valid AccesorioRequest request,
@@ -60,12 +87,6 @@ public class AccesorioController {
     @GetMapping("/buscar")
     public ResponseEntity<List<AccesorioResponse>> buscarPorNombre(@RequestParam String nombre) {
         return ResponseEntity.ok(service.buscarPorNombre(nombre));
-    }
-
-    // SOLO SE MODIFICÓ ESTO: Ahora recibe el categoriaId (Long) en la ruta
-    @GetMapping("/categoria/{categoriaId}")
-    public ResponseEntity<List<AccesorioResponse>> buscarPorCategoriaId(@PathVariable Long categoriaId) {
-        return ResponseEntity.ok(service.buscarPorCategoriaId(categoriaId));
     }
 
     @DeleteMapping("/{id}")

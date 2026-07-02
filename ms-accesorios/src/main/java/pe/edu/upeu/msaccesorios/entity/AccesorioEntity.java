@@ -24,12 +24,10 @@ public class AccesorioEntity {
     @Column(name = "STOCK", nullable = false)
     private Integer stock;
 
-    // SOLO SE MODIFICÓ ESTO: Ahora es un Long para guardar el ID del otro microservicio
-    @Column(name = "CATEGORIA_ID", nullable = false)
-    private Long categoriaId;
+    // Se eliminó por completo el campo categoriaId
 
-    @Column(name = "MARCA", nullable = false, length = 50)
-    private String marca;
+    @Column(name = "MARCA_ID", nullable = false)
+    private Long marcaId;
 
     @Column(name = "ESTADO_ID", nullable = false)
     private Long estadoId;
@@ -40,14 +38,14 @@ public class AccesorioEntity {
     public AccesorioEntity() {
     }
 
-    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, Long categoriaId, String marca, Long estadoId, String imagenUrl) {
+    // Constructor actualizado sin categoriaId
+    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, Long marcaId, Long estadoId, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
-        this.categoriaId = categoriaId;
-        this.marca = marca;
+        this.marcaId = marcaId;
         this.estadoId = estadoId;
         this.imagenUrl = imagenUrl;
     }
@@ -92,20 +90,12 @@ public class AccesorioEntity {
         this.stock = stock;
     }
 
-    public Long getCategoriaId() {
-        return categoriaId;
+    public Long getMarcaId() {
+        return marcaId;
     }
 
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setMarcaId(Long marcaId) {
+        this.marcaId = marcaId;
     }
 
     public Long getEstadoId() {
