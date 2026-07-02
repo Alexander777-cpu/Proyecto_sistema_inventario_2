@@ -1,6 +1,5 @@
 package pe.edu.upeu.msproveedores.entity;
 
-
 import jakarta.persistence.*;
 
 @Entity

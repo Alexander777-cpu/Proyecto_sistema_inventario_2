@@ -8,8 +8,9 @@ import pe.edu.upeu.msproveedores.service.ICategoriaProveedorService;
 
 import java.util.List;
 
+// 👇 Ruta limpia como en herramientas
 @RestController
-@RequestMapping("/api/categoria-proveedor")
+@RequestMapping("/api/proveedores/categorias")
 public class CategoriaProveedorController {
 
     private final ICategoriaProveedorService service;

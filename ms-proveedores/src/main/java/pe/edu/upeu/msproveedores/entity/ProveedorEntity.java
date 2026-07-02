@@ -20,8 +20,10 @@ public class ProveedorEntity {
     @Column(name = "TELEFONO", length = 20, nullable = false)
     private String telefono;
 
-    @Column(name = "CATEGORIA_ID", nullable = false)
-    private Long categoriaId;
+    // 👇 AQUÍ ESTÁ LA CORRECCIÓN CLAVE (@ManyToOne)
+    @ManyToOne
+    @JoinColumn(name = "CATEGORIA_ID", nullable = false)
+    private CategoriaProveedorEntity categoria;
 
     @Column(name = "DIRECCION", length = 100, nullable = false)
     private String direccion;
@@ -38,12 +40,13 @@ public class ProveedorEntity {
     public ProveedorEntity() {
     }
 
-    public ProveedorEntity(Long id, String nombres, String apellidos, String telefono, Long categoriaId, String direccion, String ubicacion, String imagenUrl, String descripcion) {
+    // Constructor actualizado
+    public ProveedorEntity(Long id, String nombres, String apellidos, String telefono, CategoriaProveedorEntity categoria, String direccion, String ubicacion, String imagenUrl, String descripcion) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.categoriaId = categoriaId;
+        this.categoria = categoria;
         this.direccion = direccion;
         this.ubicacion = ubicacion;
         this.imagenUrl = imagenUrl;
@@ -63,8 +66,9 @@ public class ProveedorEntity {
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public Long getCategoriaId() { return categoriaId; }
-    public void setCategoriaId(Long categoriaId) { this.categoriaId = categoriaId; }
+    // Nuevos getter y setter apuntando a la Entidad
+    public CategoriaProveedorEntity getCategoria() { return categoria; }
+    public void setCategoria(CategoriaProveedorEntity categoria) { this.categoria = categoria; }
 
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }

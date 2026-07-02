@@ -2,6 +2,7 @@ package pe.edu.upeu.msproveedores.mapper;
 
 import pe.edu.upeu.msproveedores.dto.ProveedorRequest;
 import pe.edu.upeu.msproveedores.dto.ProveedorResponse;
+import pe.edu.upeu.msproveedores.entity.CategoriaProveedorEntity;
 import pe.edu.upeu.msproveedores.entity.ProveedorEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +14,16 @@ public class ProveedorMapper {
         entity.setNombres(request.getNombres());
         entity.setApellidos(request.getApellidos());
         entity.setTelefono(request.getTelefono());
-        entity.setCategoriaId(request.getCategoriaId());
         entity.setDireccion(request.getDireccion());
         entity.setUbicacion(request.getUbicacion());
         entity.setImagenUrl(request.getImagenUrl());
         entity.setDescripcion(request.getDescripcion());
+
+        // Asignamos el ID a la entidad relacional
+        CategoriaProveedorEntity categoria = new CategoriaProveedorEntity();
+        categoria.setId(request.getCategoriaId());
+        entity.setCategoria(categoria);
+
         return entity;
     }
 
@@ -27,8 +33,8 @@ public class ProveedorMapper {
                 entity.getNombres(),
                 entity.getApellidos(),
                 entity.getTelefono(),
-                entity.getCategoriaId(),
-                null, // categoriaNombre: se llenará en el Service
+                entity.getCategoria() != null ? entity.getCategoria().getId() : null,
+                entity.getCategoria() != null ? entity.getCategoria().getNombre() : null,
                 entity.getDireccion(),
                 entity.getUbicacion(),
                 entity.getImagenUrl(),
@@ -40,10 +46,13 @@ public class ProveedorMapper {
         entity.setNombres(request.getNombres());
         entity.setApellidos(request.getApellidos());
         entity.setTelefono(request.getTelefono());
-        entity.setCategoriaId(request.getCategoriaId());
         entity.setDireccion(request.getDireccion());
         entity.setUbicacion(request.getUbicacion());
         entity.setImagenUrl(request.getImagenUrl());
         entity.setDescripcion(request.getDescripcion());
+
+        CategoriaProveedorEntity categoria = new CategoriaProveedorEntity();
+        categoria.setId(request.getCategoriaId());
+        entity.setCategoria(categoria);
     }
 }
