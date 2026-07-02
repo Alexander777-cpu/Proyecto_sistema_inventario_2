@@ -9,7 +9,7 @@ import pe.edu.upeu.msherramientas.service.IMarcaHerramientaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/marcas")
+@RequestMapping("/api/herramientas/marcas")
 public class MarcaHerramientaController {
 
     private final IMarcaHerramientaService marcaService;

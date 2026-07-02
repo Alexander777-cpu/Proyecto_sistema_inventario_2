@@ -45,21 +45,6 @@ public class AccesorioService implements IAccesorioService {
         return null;
     }
 
-    // ==========================================
-    // MÉTODO MAGICO: LLENA LOS NOMBRES FALTANTES
-    // ==========================================
-    private AccesorioResponse enriquecerConNombres(AccesorioResponse response) {
-        if (response.getMarcaId() != null) {
-            MarcaAccesorioEntity marca = marcaService.buscarPorId(response.getMarcaId());
-            response.setMarcaNombre(marca.getNombre());
-        }
-        if (response.getEstadoId() != null) {
-            EstadoAccesorioEntity estado = estadoService.buscarPorId(response.getEstadoId());
-            response.setEstadoNombre(estado.getNombre());
-        }
-        return response;
-    }
-
     @Override
     public AccesorioResponse crear(AccesorioRequest request, MultipartFile imagen) throws Exception {
         if (repository.existsByNombreIgnoreCase(request.getNombre())) {
@@ -73,20 +58,16 @@ public class AccesorioService implements IAccesorioService {
         request.setImagenUrl(urlImagen);
 
         AccesorioEntity entity = mapper.toEntity(request);
-        entity.setMarcaId(marca.getId());
-        entity.setEstadoId(estado.getId());
+        entity.setMarca(marca);
+        entity.setEstado(estado);
 
-        AccesorioEntity guardado = repository.save(entity);
-
-        // Mapear y luego llenar los nombres
-        return enriquecerConNombres(mapper.toResponse(guardado));
+        return mapper.toResponse(repository.save(entity));
     }
 
     @Override
     public List<AccesorioResponse> listar() {
         return repository.findAll().stream()
                 .map(mapper::toResponse)
-                .map(this::enriquecerConNombres) // Aquí llenamos los nombres al listar
                 .collect(Collectors.toList());
     }
 
@@ -94,14 +75,13 @@ public class AccesorioService implements IAccesorioService {
     public AccesorioResponse buscarPorId(Long id) {
         AccesorioEntity entity = repository.findById(id)
                 .orElseThrow(() -> new AccesorioNotFoundException(id));
-        return enriquecerConNombres(mapper.toResponse(entity)); // Llenamos nombres aquí también
+        return mapper.toResponse(entity);
     }
 
     @Override
     public List<AccesorioResponse> buscarPorNombre(String nombre) {
         return repository.findByNombreContainingIgnoreCase(nombre).stream()
                 .map(mapper::toResponse)
-                .map(this::enriquecerConNombres)
                 .collect(Collectors.toList());
     }
 
@@ -120,11 +100,10 @@ public class AccesorioService implements IAccesorioService {
         }
 
         mapper.updateEntity(entity, request);
-        entity.setMarcaId(marca.getId());
-        entity.setEstadoId(estado.getId());
+        entity.setMarca(marca);
+        entity.setEstado(estado);
 
-        AccesorioEntity guardado = repository.save(entity);
-        return enriquecerConNombres(mapper.toResponse(guardado));
+        return mapper.toResponse(repository.save(entity));
     }
 
     @Override

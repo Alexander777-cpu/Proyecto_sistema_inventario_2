@@ -9,7 +9,7 @@ import pe.edu.upeu.msherramientas.service.ITipoHerramientaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tipos")
+@RequestMapping("/api/herramientas/tipos")
 public class TipoHerramientaController {
 
     private final ITipoHerramientaService tipoService;

@@ -9,7 +9,7 @@ import pe.edu.upeu.msherramientas.service.IEstadoHerramientaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/estados")
+@RequestMapping("/api/herramientas/estados")
 public class EstadoHerramientaController {
 
     private final IEstadoHerramientaService estadoService;

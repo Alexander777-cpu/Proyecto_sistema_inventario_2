@@ -11,7 +11,7 @@ spring:
             - id: ms-accesorios
               uri: lb://ms-accesorios
               predicates:
-                - Path=/api/accesorios/**
+                Path=/api/accesorios/**
             - id: ms-clientes
               uri: lb://ms-clientes
               predicates:
@@ -19,7 +19,7 @@ spring:
             - id: ms-herramientas
               uri: lb://ms-herramientas
               predicates:
-                - Path=/api/herramientas/**, /api/tipos/**, /api/marcas/**, /api/estados/**
+                - Path=/api/herramientas/**
             - id: ms-melamine
               uri: lb://ms-melamine
               predicates:

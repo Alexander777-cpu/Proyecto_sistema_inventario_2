@@ -2,7 +2,6 @@ package pe.edu.upeu.msaccesorios.entity;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "accesorios")
 public class AccesorioEntity {
@@ -24,13 +23,13 @@ public class AccesorioEntity {
     @Column(name = "STOCK", nullable = false)
     private Integer stock;
 
-    // Se eliminó por completo el campo categoriaId
+    @ManyToOne
+    @JoinColumn(name = "MARCA_ID", nullable = false)
+    private MarcaAccesorioEntity marca;
 
-    @Column(name = "MARCA_ID", nullable = false)
-    private Long marcaId;
-
-    @Column(name = "ESTADO_ID", nullable = false)
-    private Long estadoId;
+    @ManyToOne
+    @JoinColumn(name = "ESTADO_ID", nullable = false)
+    private EstadoAccesorioEntity estado;
 
     @Column(name = "IMAGEN_URL")
     private String imagenUrl;
@@ -38,15 +37,14 @@ public class AccesorioEntity {
     public AccesorioEntity() {
     }
 
-    // Constructor actualizado sin categoriaId
-    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, Long marcaId, Long estadoId, String imagenUrl) {
+    public AccesorioEntity(Long id, String nombre, String descripcion, Double precio, Integer stock, MarcaAccesorioEntity marca, EstadoAccesorioEntity estado, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
-        this.marcaId = marcaId;
-        this.estadoId = estadoId;
+        this.marca = marca;
+        this.estado = estado;
         this.imagenUrl = imagenUrl;
     }
 
@@ -90,20 +88,20 @@ public class AccesorioEntity {
         this.stock = stock;
     }
 
-    public Long getMarcaId() {
-        return marcaId;
+    public MarcaAccesorioEntity getMarca() {
+        return marca;
     }
 
-    public void setMarcaId(Long marcaId) {
-        this.marcaId = marcaId;
+    public void setMarca(MarcaAccesorioEntity marca) {
+        this.marca = marca;
     }
 
-    public Long getEstadoId() {
-        return estadoId;
+    public EstadoAccesorioEntity getEstado() {
+        return estado;
     }
 
-    public void setEstadoId(Long estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado(EstadoAccesorioEntity estado) {
+        this.estado = estado;
     }
 
     public String getImagenUrl() {
