@@ -10,6 +10,7 @@ import pe.edu.upeu.msmelamine.dto.MelamineRequest;
 import pe.edu.upeu.msmelamine.dto.MelamineResponse;
 import pe.edu.upeu.msmelamine.service.IMelamineService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,18 @@ public class MelamineController {
     @GetMapping("/buscar")
     public ResponseEntity<List<MelamineResponse>> buscarPorNombre(@RequestParam String nombre) {
         return ResponseEntity.ok(service.buscarPorNombre(nombre));
+    }
+
+    @GetMapping("/dimensiones")
+    public ResponseEntity<List<MelamineResponse>> buscarPorDimensiones(
+            @RequestParam BigDecimal ancho,
+            @RequestParam BigDecimal largo) {
+        return ResponseEntity.ok(service.buscarPorDimensiones(ancho, largo));
+    }
+
+    @GetMapping("/estado/{estadoId}")
+    public ResponseEntity<List<MelamineResponse>> buscarPorEstado(@PathVariable Long estadoId) {
+        return ResponseEntity.ok(service.buscarPorEstado(estadoId));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

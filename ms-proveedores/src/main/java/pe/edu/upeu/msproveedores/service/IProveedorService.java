@@ -13,6 +13,8 @@ public interface IProveedorService {
 
     ProveedorResponse buscarPorId(Long id);
 
+    List<ProveedorResponse> buscarPorCategoria(Long categoriaId);
+
     // Usamos el DTO para la actualización
     ProveedorResponse actualizar(Long id, ProveedorRequest request, MultipartFile imagen) throws Exception;
 

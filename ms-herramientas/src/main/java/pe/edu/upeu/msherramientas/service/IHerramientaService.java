@@ -16,6 +16,10 @@ public interface IHerramientaService {
 
     List<HerramientaResponse> buscarPorNombre(String nombre);
 
+    List<HerramientaResponse> buscarPorMarca(Long marcaId);
+
+    List<HerramientaResponse> buscarPorEstado(Long estadoId);
+
     HerramientaResponse actualizar(Long id, HerramientaRequest request, MultipartFile imagen) throws Exception;
 
     void eliminar(Long id);

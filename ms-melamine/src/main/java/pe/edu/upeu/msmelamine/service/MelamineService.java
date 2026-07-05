@@ -12,6 +12,7 @@ import pe.edu.upeu.msmelamine.mapper.MelamineMapper;
 import pe.edu.upeu.msmelamine.repository.MelamineRepository;
 import pe.edu.upeu.msmelamine.service.cloud.CloudinaryService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,6 +80,18 @@ public class MelamineService implements IMelamineService {
     @Override
     public List<MelamineResponse> buscarPorNombre(String nombre) {
         return repository.findByNombreContainingIgnoreCase(nombre).stream()
+                .map(mapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MelamineResponse> buscarPorDimensiones(BigDecimal ancho, BigDecimal largo) {
+        return repository.findByAnchoAndLargo(ancho, largo).stream()
+                .map(mapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MelamineResponse> buscarPorEstado(Long estadoId) {
+        return repository.findByEstadoId(estadoId).stream()
                 .map(mapper::toResponse).collect(Collectors.toList());
     }
 

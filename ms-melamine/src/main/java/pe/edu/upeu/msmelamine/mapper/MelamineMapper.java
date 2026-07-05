@@ -16,6 +16,7 @@ public class MelamineMapper {
         entity.setNombre(request.getNombre());
         entity.setAncho(request.getAncho());
         entity.setLargo(request.getLargo());
+        entity.setCantidad(request.getCantidad());
         entity.setImagenUrl(request.getImagenUrl());
 
         ColorMelamineEntity color = new ColorMelamineEntity();
@@ -39,6 +40,7 @@ public class MelamineMapper {
                 entity.getNombre(),
                 entity.getAncho(),
                 entity.getLargo(),
+                entity.getCantidad(),
                 entity.getColor() != null ? entity.getColor().getId() : null,
                 entity.getColor() != null ? entity.getColor().getNombre() : null,
                 entity.getMarca() != null ? entity.getMarca().getId() : null,
@@ -53,6 +55,7 @@ public class MelamineMapper {
         entity.setNombre(request.getNombre());
         entity.setAncho(request.getAncho());
         entity.setLargo(request.getLargo());
+        entity.setCantidad(request.getCantidad());
         entity.setImagenUrl(request.getImagenUrl());
 
         ColorMelamineEntity color = new ColorMelamineEntity();

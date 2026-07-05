@@ -17,6 +17,7 @@ public class HerramientaMapper {
     public HerramientaEntity toEntity(HerramientaRequest request) {
         HerramientaEntity entity = new HerramientaEntity();
         entity.setNombre(request.getNombre());
+        entity.setCantidad(request.getCantidad());
         entity.setCompra(request.getCompra());
         entity.setVidaUtil(request.getVidaUtil());
         entity.setFechaInicio(request.getFechaInicio());
@@ -49,6 +50,7 @@ public class HerramientaMapper {
         return new HerramientaResponse(
                 entity.getId(),
                 entity.getNombre(),
+                entity.getCantidad(),
                 // Extraemos los nombres de las entidades relacionadas de forma segura
                 entity.getTipo() != null ? entity.getTipo().getNombre() : null,
                 entity.getMarca() != null ? entity.getMarca().getNombre() : null,
@@ -63,6 +65,7 @@ public class HerramientaMapper {
 
     public void updateEntity(HerramientaEntity entity, HerramientaRequest request) {
         entity.setNombre(request.getNombre());
+        entity.setCantidad(request.getCantidad());
         entity.setCompra(request.getCompra());
         entity.setVidaUtil(request.getVidaUtil());
         entity.setFechaInicio(request.getFechaInicio());

@@ -40,6 +40,11 @@ public class ProveedorController {
         return ResponseEntity.ok(service.buscarPorNombre(nombres));
     }
 
+    @GetMapping("/categoria/{categoriaId}")
+    public ResponseEntity<List<ProveedorResponse>> buscarPorCategoria(@PathVariable Long categoriaId) {
+        return ResponseEntity.ok(service.buscarPorCategoria(categoriaId));
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProveedorResponse> crear(
             @RequestPart(value = "proveedor") @Valid ProveedorRequest request,

@@ -68,6 +68,12 @@ public class ProveedorService implements IProveedorService {
     }
 
     @Override
+    public List<ProveedorResponse> buscarPorCategoria(Long categoriaId) {
+        return repository.findByCategoriaId(categoriaId).stream()
+                .map(mapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
     public List<ProveedorResponse> buscarPorNombre(String nombres) {
         return repository.findByNombresContainingIgnoreCase(nombres).stream()
                 .map(mapper::toResponse)

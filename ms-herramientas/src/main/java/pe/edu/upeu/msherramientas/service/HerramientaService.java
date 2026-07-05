@@ -100,6 +100,18 @@ public class HerramientaService implements IHerramientaService {
     }
 
     @Override
+    public List<HerramientaResponse> buscarPorMarca(Long marcaId) {
+        return repository.findByMarcaId(marcaId).stream()
+                .map(mapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<HerramientaResponse> buscarPorEstado(Long estadoId) {
+        return repository.findByEstadoId(estadoId).stream()
+                .map(mapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
     public HerramientaResponse actualizar(Long id, HerramientaRequest request, MultipartFile imagen) throws Exception {
         // 1. Buscar la herramienta existente
         HerramientaEntity entity = repository.findById(id)

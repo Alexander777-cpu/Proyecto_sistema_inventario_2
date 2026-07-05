@@ -9,6 +9,10 @@ public class HerramientaRequest {
     @Size(max = 100, message = "El nombre no debe exceder 100 caracteres")
     private String nombre;
 
+    @NotNull(message = "La cantidad es obligatoria")
+    @Min(value = 0, message = "La cantidad no puede ser negativa")
+    private Integer cantidad;
+
     @NotNull(message = "El ID del tipo es obligatorio")
     private Long tipoId;
 
@@ -33,8 +37,9 @@ public class HerramientaRequest {
     public HerramientaRequest() {
     }
 
-    public HerramientaRequest(String nombre, Long tipoId, Long marcaId, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+    public HerramientaRequest(String nombre, Integer cantidad, Long tipoId, Long marcaId, Long estadoId, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
         this.nombre = nombre;
+        this.cantidad = cantidad;
         this.tipoId = tipoId;
         this.marcaId = marcaId;
         this.estadoId = estadoId;
@@ -50,6 +55,14 @@ public class HerramientaRequest {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Long getTipoId() {
@@ -107,5 +120,4 @@ public class HerramientaRequest {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
-
 }

@@ -15,6 +15,9 @@ public class HerramientaEntity {
     @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
+    @Column(name = "CANTIDAD", nullable = false)
+    private Integer cantidad;
+
     @ManyToOne
     @JoinColumn(name = "TIPO_ID", nullable = false)
     private TipoHerramientaEntity tipo;
@@ -42,9 +45,10 @@ public class HerramientaEntity {
     public HerramientaEntity() {
     }
 
-    public HerramientaEntity(Long id, String nombre, TipoHerramientaEntity tipo, MarcaHerramientaEntity marca, EstadoHerramientaEntity estado, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
+    public HerramientaEntity(Long id, String nombre, Integer cantidad, TipoHerramientaEntity tipo, MarcaHerramientaEntity marca, EstadoHerramientaEntity estado, LocalDate compra, LocalDate fechaInicio, Integer vidaUtil, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
+        this.cantidad = cantidad;
         this.tipo = tipo;
         this.marca = marca;
         this.estado = estado;
@@ -68,6 +72,14 @@ public class HerramientaEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public TipoHerramientaEntity getTipo() {

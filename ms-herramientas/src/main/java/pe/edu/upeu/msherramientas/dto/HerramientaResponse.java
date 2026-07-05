@@ -6,6 +6,7 @@ public class HerramientaResponse {
 
     private Long id;
     private String nombre;
+    private Integer cantidad;
     private String tipoNombre;
     private String marcaNombre;
     private String estadoNombre;
@@ -18,9 +19,10 @@ public class HerramientaResponse {
     public HerramientaResponse() {
     }
 
-    public HerramientaResponse(Long id, String nombre, String tipoNombre, String marcaNombre, String estadoNombre, LocalDate compra, LocalDate fechaInicio, String imagenUrl, Integer vidaUtil, Long diasRestantes) {
+    public HerramientaResponse(Long id, String nombre, Integer cantidad, String tipoNombre, String marcaNombre, String estadoNombre, LocalDate compra, LocalDate fechaInicio, String imagenUrl, Integer vidaUtil, Long diasRestantes) {
         this.id = id;
         this.nombre = nombre;
+        this.cantidad = cantidad;
         this.tipoNombre = tipoNombre;
         this.marcaNombre = marcaNombre;
         this.estadoNombre = estadoNombre;
@@ -45,6 +47,14 @@ public class HerramientaResponse {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public String getTipoNombre() {

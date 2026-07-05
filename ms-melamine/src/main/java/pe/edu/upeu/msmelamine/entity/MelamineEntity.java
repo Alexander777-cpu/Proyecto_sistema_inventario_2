@@ -21,7 +21,9 @@ public class MelamineEntity {
     @Column(name = "LARGO", nullable = false)
     private BigDecimal largo;
 
-    // Relaciones correctas (Adiós N+1)
+    @Column(name = "CANTIDAD", nullable = false)
+    private Integer cantidad;
+
     @ManyToOne
     @JoinColumn(name = "COLOR_ID", nullable = false)
     private ColorMelamineEntity color;
@@ -40,11 +42,12 @@ public class MelamineEntity {
     public MelamineEntity() {
     }
 
-    public MelamineEntity(Long id, String nombre, BigDecimal ancho, BigDecimal largo, ColorMelamineEntity color, MarcaMelamineEntity marca, EstadoMelamineEntity estado, String imagenUrl) {
+    public MelamineEntity(Long id, String nombre, BigDecimal ancho, BigDecimal largo, Integer cantidad, ColorMelamineEntity color, MarcaMelamineEntity marca, EstadoMelamineEntity estado, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.ancho = ancho;
         this.largo = largo;
+        this.cantidad = cantidad;
         this.color = color;
         this.marca = marca;
         this.estado = estado;
@@ -83,6 +86,14 @@ public class MelamineEntity {
         this.largo = largo;
     }
 
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
     public ColorMelamineEntity getColor() {
         return color;
     }
@@ -114,5 +125,4 @@ public class MelamineEntity {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
-
 }

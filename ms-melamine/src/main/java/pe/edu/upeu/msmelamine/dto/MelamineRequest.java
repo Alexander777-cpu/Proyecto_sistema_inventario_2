@@ -1,6 +1,7 @@
 package pe.edu.upeu.msmelamine.dto;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,6 +21,10 @@ public class MelamineRequest {
     @DecimalMin(value = "0.0", inclusive = false, message = "El largo debe ser mayor a 0")
     private BigDecimal largo;
 
+    @NotNull(message = "La cantidad es obligatoria")
+    @Min(value = 0, message = "La cantidad no puede ser negativa")
+    private Integer cantidad;
+
     @NotNull(message = "El ID del color es obligatorio")
     private Long colorId;
 
@@ -31,13 +36,13 @@ public class MelamineRequest {
 
     private String imagenUrl;
 
-    public MelamineRequest() {
-    }
+    public MelamineRequest() {}
 
-    public MelamineRequest(String nombre, BigDecimal ancho, BigDecimal largo, Long colorId, Long marcaId, Long estadoId, String imagenUrl) {
+    public MelamineRequest(String nombre, BigDecimal ancho, BigDecimal largo, Integer cantidad, Long colorId, Long marcaId, Long estadoId, String imagenUrl) {
         this.nombre = nombre;
         this.ancho = ancho;
         this.largo = largo;
+        this.cantidad = cantidad;
         this.colorId = colorId;
         this.marcaId = marcaId;
         this.estadoId = estadoId;
@@ -66,6 +71,14 @@ public class MelamineRequest {
 
     public void setLargo(BigDecimal largo) {
         this.largo = largo;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Long getColorId() {
