@@ -32,7 +32,7 @@
         </processorPath>
         <module name="ms-melamine" />
       </profile>
-      <profile name="Annotation profile for ms-proyectos" enabled="true">
+      <profile name="Annotation profile for ms-clientes" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
