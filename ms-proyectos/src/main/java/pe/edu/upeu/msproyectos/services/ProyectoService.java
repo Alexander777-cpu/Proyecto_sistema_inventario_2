@@ -1,11 +1,14 @@
-package pe.edu.upeu.msproyectos.services;
+package pe.edu.upeu.msproyectos.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.edu.upeu.msproyectos.dtos.*;
+import pe.edu.upeu.msproyectos.dtos.ProyectoRequest;
+import pe.edu.upeu.msproyectos.dtos.ProyectoResponse;
 import pe.edu.upeu.msproyectos.entity.ProyectoEntity;
 import pe.edu.upeu.msproyectos.mappers.ProyectoMapper;
 import pe.edu.upeu.msproyectos.repository.ProyectoRepository;
+import pe.edu.upeu.msproyectos.services.IProyectoService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,43 +16,61 @@ import java.util.stream.Collectors;
 @Service
 public class ProyectoService implements IProyectoService {
 
-    private final ProyectoRepository repository;
-    private final ProyectoMapper mapper;
+    @Autowired
+    private ProyectoRepository repository;
 
-    public ProyectoService(ProyectoRepository repository, ProyectoMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+    @Autowired
+    private ProyectoMapper mapper;
 
     @Override
-    @Transactional
-    public ProyectoResponse crear(ProyectoRequest request) {
-        ProyectoEntity entity = mapper.toEntity(request);
-        return mapper.toResponse(repository.save(entity));
-    }
-
-    @Override
-    public List<ProyectoResponse> listar() {
+    @Transactional(readOnly = true)
+    public List<ProyectoResponse> listarTodos() {
         return repository.findAll().stream()
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProyectoResponse buscarPorId(Long id) {
         return repository.findById(id)
                 .map(mapper::toResponse)
-                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado con id: " + id));
+    }
+
+    @Override
+    @Transactional
+    public ProyectoResponse crear(ProyectoRequest request) {
+        ProyectoEntity entity = mapper.toEntity(request);
+        ProyectoEntity guardado = repository.save(entity);
+        return mapper.toResponse(guardado);
     }
 
     @Override
     @Transactional
     public ProyectoResponse actualizar(Long id, ProyectoRequest request) {
-        ProyectoEntity entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+        return repository.findById(id).map(existente -> {
 
-        mapper.updateEntity(entity, request);
-        return mapper.toResponse(repository.save(entity));
+            // 1. Actualizar campos cabecera
+            existente.setNombre(request.getNombre());
+            existente.setDireccion(request.getDireccion());
+            existente.setClienteId(request.getClienteId());
+
+            // 2. Limpiar y reconstruir detalles (vital para CascadeType.ALL y orphanRemoval)
+            ProyectoEntity nuevosDatos = mapper.toEntity(request);
+            existente.getDetalles().clear();
+
+            if (nuevosDatos.getDetalles() != null) {
+                nuevosDatos.getDetalles().forEach(detalle -> {
+                    detalle.setProyecto(existente);
+                    existente.getDetalles().add(detalle);
+                });
+            }
+
+            ProyectoEntity actualizado = repository.save(existente);
+            return mapper.toResponse(actualizado);
+
+        }).orElseThrow(() -> new RuntimeException("Proyecto no encontrado con id: " + id));
     }
 
     @Override

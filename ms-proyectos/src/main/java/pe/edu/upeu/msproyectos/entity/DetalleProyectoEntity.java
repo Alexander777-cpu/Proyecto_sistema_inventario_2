@@ -1,7 +1,8 @@
 package pe.edu.upeu.msproyectos.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import pe.edu.upeu.msproyectos.entity.ProyectoEntity;
 
 @Entity
 @Table(name = "detalleproyecto")
@@ -11,31 +12,39 @@ public class DetalleProyectoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "HERRAMIENTA_ID", nullable = true)
+    @Column(name = "herramienta_id")
     private Long herramientaId;
+    @Column(name = "cantidad_herramienta")
+    private Long cantidadHerramienta = 0;
 
-    @Column(name = "ACCESORIO_ID", nullable = true)
+    @Column(name = "accesorio_id")
     private Long accesorioId;
+    @Column(name = "cantidad_accesorio")
+    private Long cantidadAccesorio = 0;
 
-    @Column(name = "MELAMINE_ID", nullable = true)
+    @Column(name = "melamine_id")
     private Long melamineId;
+    @Column(name = "cantidad_melamine")
+    private Long cantidadMelamine = 0;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id")
-    @JsonIgnore // Evita recursión infinita
+    @JsonIgnore
     private ProyectoEntity proyecto;
 
     public DetalleProyectoEntity() {
     }
 
-    public DetalleProyectoEntity(Long id, Long herramientaId, Long accesorioId, Long melamineId, ProyectoEntity proyecto) {
+    public DetalleProyectoEntity(Long id, Long herramientaId, Long cantidadHerramienta, Long accesorioId, Long cantidadAccesorio, Long melamineId, Long cantidadMelamine, ProyectoEntity proyecto) {
         this.id = id;
         this.herramientaId = herramientaId;
+        this.cantidadHerramienta = cantidadHerramienta;
         this.accesorioId = accesorioId;
+        this.cantidadAccesorio = cantidadAccesorio;
         this.melamineId = melamineId;
+        this.cantidadMelamine = cantidadMelamine;
         this.proyecto = proyecto;
     }
-
 
     public Long getId() {
         return id;
@@ -53,6 +62,14 @@ public class DetalleProyectoEntity {
         this.herramientaId = herramientaId;
     }
 
+    public Long getCantidadHerramienta() {
+        return cantidadHerramienta;
+    }
+
+    public void setCantidadHerramienta(Long cantidadHerramienta) {
+        this.cantidadHerramienta = cantidadHerramienta;
+    }
+
     public Long getAccesorioId() {
         return accesorioId;
     }
@@ -61,12 +78,28 @@ public class DetalleProyectoEntity {
         this.accesorioId = accesorioId;
     }
 
+    public Long getCantidadAccesorio() {
+        return cantidadAccesorio;
+    }
+
+    public void setCantidadAccesorio(Long cantidadAccesorio) {
+        this.cantidadAccesorio = cantidadAccesorio;
+    }
+
     public Long getMelamineId() {
         return melamineId;
     }
 
     public void setMelamineId(Long melamineId) {
         this.melamineId = melamineId;
+    }
+
+    public Long getCantidadMelamine() {
+        return cantidadMelamine;
+    }
+
+    public void setCantidadMelamine(Long cantidadMelamine) {
+        this.cantidadMelamine = cantidadMelamine;
     }
 
     public ProyectoEntity getProyecto() {

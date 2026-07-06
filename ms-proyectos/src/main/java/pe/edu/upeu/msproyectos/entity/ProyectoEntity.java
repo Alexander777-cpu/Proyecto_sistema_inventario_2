@@ -36,43 +36,22 @@ public class ProyectoEntity {
         this.detalles = detalles;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public Long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
-    }
-
-    public List<DetalleProyectoEntity> getDetalles() {
-        return detalles;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public Long getClienteId() { return clienteId; }
+    public void setClienteId(Long clienteId) { this.clienteId = clienteId; }
+    public List<DetalleProyectoEntity> getDetalles() { return detalles; }
 
     public void setDetalles(List<DetalleProyectoEntity> detalles) {
         this.detalles = detalles;
+        if (detalles != null) {
+            for (DetalleProyectoEntity detalle : detalles) {
+                detalle.setProyecto(this);
+            }
+        }
     }
 }

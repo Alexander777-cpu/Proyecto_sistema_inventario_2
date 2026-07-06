@@ -8,33 +8,33 @@ public class DetalleProyectoRequest {
 
     @NotNull(message = "La herramienta es obligatoria")
     private Long herramientaId;
-
+    private Long cantidadHerramienta;
     @NotNull(message = "El accesorio es obligatorio")
     private Long accesorioId;
-
+    private Long cantidadAccesorio;
     @NotNull(message = "El melamine es obligatorio")
     private Long melamineId;
-
+    private Long cantidadMelamine;
 
     private ProyectoEntity proyecto;
 
     public DetalleProyectoRequest() {
     }
 
-    public Long getHerramientaId() {
-        return herramientaId;
+    public ProyectoEntity getProyecto() {
+        return proyecto;
     }
 
-    public void setHerramientaId(Long herramientaId) {
-        this.herramientaId = herramientaId;
+    public void setProyecto(ProyectoEntity proyecto) {
+        this.proyecto = proyecto;
     }
 
-    public Long getAccesorioId() {
-        return accesorioId;
+    public Long getCantidadMelamine() {
+        return cantidadMelamine;
     }
 
-    public void setAccesorioId(Long accesorioId) {
-        this.accesorioId = accesorioId;
+    public void setCantidadMelamine(Long cantidadMelamine) {
+        this.cantidadMelamine = cantidadMelamine;
     }
 
     public Long getMelamineId() {
@@ -45,11 +45,35 @@ public class DetalleProyectoRequest {
         this.melamineId = melamineId;
     }
 
-    public ProyectoEntity getProyecto() {
-        return proyecto;
+    public Long getCantidadAccesorio() {
+        return cantidadAccesorio;
     }
 
-    public void setProyecto(ProyectoEntity proyecto) {
-        this.proyecto = proyecto;
+    public void setCantidadAccesorio(Long cantidadAccesorio) {
+        this.cantidadAccesorio = cantidadAccesorio;
+    }
+
+    public Long getAccesorioId() {
+        return accesorioId;
+    }
+
+    public void setAccesorioId(Long accesorioId) {
+        this.accesorioId = accesorioId;
+    }
+
+    public Long getCantidadHerramienta() {
+        return cantidadHerramienta;
+    }
+
+    public void setCantidadHerramienta(Long cantidadHerramienta) {
+        this.cantidadHerramienta = cantidadHerramienta;
+    }
+
+    public Long getHerramientaId() {
+        return herramientaId;
+    }
+
+    public void setHerramientaId(Long herramientaId) {
+        this.herramientaId = herramientaId;
     }
 }

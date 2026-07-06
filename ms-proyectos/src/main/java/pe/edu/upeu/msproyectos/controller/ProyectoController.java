@@ -1,6 +1,7 @@
 package pe.edu.upeu.msproyectos.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,41 +11,37 @@ import pe.edu.upeu.msproyectos.services.IProyectoService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/proyectos")
+@CrossOrigin(origins = "*") // Habilitado para conectar con Angular sin problemas de CORS
 public class ProyectoController {
 
-    private final IProyectoService proyectoService;
-
-    public ProyectoController(IProyectoService proyectoService) {
-        this.proyectoService = proyectoService;
-    }
+    @Autowired
+    private IProyectoService service;
 
     @GetMapping
     public ResponseEntity<List<ProyectoResponse>> listar() {
-        return ResponseEntity.ok(proyectoService.listar());
+        return ResponseEntity.ok(service.listarTodos());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProyectoResponse> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(proyectoService.buscarPorId(id));
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
     @PostMapping
     public ResponseEntity<ProyectoResponse> crear(@Valid @RequestBody ProyectoRequest request) {
-        return new ResponseEntity<>(proyectoService.crear(request), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.crear(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProyectoResponse> actualizar(@PathVariable Long id,
-                                                       @Valid @RequestBody ProyectoRequest request) {
-        return ResponseEntity.ok(proyectoService.actualizar(id, request));
+    public ResponseEntity<ProyectoResponse> actualizar(@PathVariable Long id, @Valid @RequestBody ProyectoRequest request) {
+        return ResponseEntity.ok(service.actualizar(id, request));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        proyectoService.eliminar(id);
+        service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 }
