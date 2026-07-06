@@ -23,13 +23,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request) {
-        return ResponseEntity.ok(authService.register(request, "USER"));
-    }
-
-    @PostMapping("/register/admin")
-    public ResponseEntity<AuthResponse> registerAdmin(@RequestBody AuthRequest request) {
-        return ResponseEntity.ok(authService.register(request, "ADMIN"));
+    public ResponseEntity<AuthResponse> register(
+            @RequestBody AuthRequest request,
+            @RequestParam(defaultValue = "USER") String rol) {
+        return ResponseEntity.ok(authService.register(request, rol));
     }
 
     @GetMapping("/validate")
