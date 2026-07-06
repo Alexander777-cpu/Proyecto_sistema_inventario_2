@@ -12,6 +12,7 @@ import pe.edu.upeu.msmelamine.service.MelamineService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/melamine")
 public class MelamineController {

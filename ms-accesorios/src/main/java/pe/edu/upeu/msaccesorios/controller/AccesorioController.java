@@ -12,6 +12,7 @@ import pe.edu.upeu.msaccesorios.service.AccesorioService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/accesorios")
 public class AccesorioController {

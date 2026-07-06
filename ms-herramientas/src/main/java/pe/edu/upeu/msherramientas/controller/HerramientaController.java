@@ -11,7 +11,7 @@ import pe.edu.upeu.msherramientas.dto.HerramientaResponse;
 import pe.edu.upeu.msherramientas.service.HerramientaService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/herramientas")
 public class HerramientaController {

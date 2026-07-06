@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pe.edu.upeu.msproveedores.service.ProveedorService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/proveedores")
 
