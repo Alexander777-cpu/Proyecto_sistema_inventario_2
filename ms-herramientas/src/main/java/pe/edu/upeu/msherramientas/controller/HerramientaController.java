@@ -32,6 +32,16 @@ public class HerramientaController {
         return ResponseEntity.ok(herramientaService.buscarPorId(id));
     }
 
+    @GetMapping("/marca/{marcaId}")
+    public ResponseEntity<List<HerramientaResponse>> buscarPorMarca(@PathVariable Long marcaId) {
+        return ResponseEntity.ok(herramientaService.buscarPorMarca(marcaId));
+    }
+
+    @GetMapping("/estado/{estadoId}")
+    public ResponseEntity<List<HerramientaResponse>> buscarPorEstado(@PathVariable Long estadoId) {
+        return ResponseEntity.ok(herramientaService.buscarPorEstado(estadoId));
+    }
+
     /**
      * IMPORTANTE: Al enviar desde Postman:
      * 1. En Body -> form-data

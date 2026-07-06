@@ -7,10 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="api-gateway" />
         <module name="config-server" />
         <module name="ms-ordenes" />
         <module name="ms-herramientas" />
+        <module name="api-gateway" />
         <module name="service-registry" />
       </profile>
       <profile name="Annotation profile for auth-service" enabled="true">
@@ -29,15 +29,17 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="ms-categorias" />
-        <module name="ms-proveedores" />
-        <module name="ms-melamine" />
-        <module name="ms-estado" />
         <module name="ms-clientes" />
         <module name="ms-proyectos" />
+        <module name="ms-proveedores" />
+        <module name="ms-melamine" />
         <module name="ms-accesorios" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ms-categorias" target="21" />
+      <module name="ms-estado" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

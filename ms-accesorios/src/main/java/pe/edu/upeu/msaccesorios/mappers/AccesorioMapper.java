@@ -4,7 +4,8 @@ import org.springframework.stereotype.Component;
 import pe.edu.upeu.msaccesorios.dto.AccesorioRequest;
 import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
 import pe.edu.upeu.msaccesorios.entity.AccesorioEntity;
-
+import pe.edu.upeu.msaccesorios.entity.EstadoAccesorioEntity;
+import pe.edu.upeu.msaccesorios.entity.MarcaAccesorioEntity;
 
 @Component
 public class AccesorioMapper {
@@ -15,11 +16,16 @@ public class AccesorioMapper {
         entity.setDescripcion(request.getDescripcion());
         entity.setPrecio(request.getPrecio());
         entity.setStock(request.getStock());
-        // SOLO SE MODIFICÓ ESTO: Ahora recibe el categoriaId (Long)
-        entity.setCategoriaId(request.getCategoriaId());
-        entity.setMarca(request.getMarca());
-        entity.setEstadoId(request.getEstadoId());
         entity.setImagenUrl(request.getImagenUrl());
+
+        MarcaAccesorioEntity marca = new MarcaAccesorioEntity();
+        marca.setId(request.getMarcaId());
+        entity.setMarca(marca);
+
+        EstadoAccesorioEntity estado = new EstadoAccesorioEntity();
+        estado.setId(request.getEstadoId());
+        entity.setEstado(estado);
+
         return entity;
     }
 
@@ -30,11 +36,10 @@ public class AccesorioMapper {
                 entity.getDescripcion(),
                 entity.getPrecio(),
                 entity.getStock(),
-                entity.getCategoriaId(),
-                null, // categoriaNombre: Se llenará en el Service con Feign
-                entity.getMarca(),
-                entity.getEstadoId(),
-                null, // estadoNombre: Se llenará en el Service con Feign
+                entity.getMarca() != null ? entity.getMarca().getId() : null,
+                entity.getMarca() != null ? entity.getMarca().getNombre() : null,
+                entity.getEstado() != null ? entity.getEstado().getId() : null,
+                entity.getEstado() != null ? entity.getEstado().getNombre() : null,
                 entity.getImagenUrl()
         );
     }
@@ -44,9 +49,14 @@ public class AccesorioMapper {
         entity.setDescripcion(request.getDescripcion());
         entity.setPrecio(request.getPrecio());
         entity.setStock(request.getStock());
-        entity.setCategoriaId(request.getCategoriaId());
-        entity.setMarca(request.getMarca());
-        entity.setEstadoId(request.getEstadoId());
         entity.setImagenUrl(request.getImagenUrl());
+
+        MarcaAccesorioEntity marca = new MarcaAccesorioEntity();
+        marca.setId(request.getMarcaId());
+        entity.setMarca(marca);
+
+        EstadoAccesorioEntity estado = new EstadoAccesorioEntity();
+        estado.setId(request.getEstadoId());
+        entity.setEstado(estado);
     }
 }

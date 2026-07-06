@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pe.edu.upeu.msaccesorios.dto.AccesorioRequest;
 import pe.edu.upeu.msaccesorios.dto.AccesorioResponse;
-import pe.edu.upeu.msaccesorios.service.AccesorioService;
+import pe.edu.upeu.msaccesorios.service.IAccesorioService;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import java.util.List;
 @RequestMapping("/api/accesorios")
 public class AccesorioController {
 
-    private final AccesorioService service;
+    private final IAccesorioService service;
 
-    public AccesorioController(AccesorioService service) {
+    public AccesorioController(IAccesorioService service) {
         this.service = service;
     }
 
@@ -33,17 +33,10 @@ public class AccesorioController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    /**
-     * IMPORTANTE: Al enviar desde Postman:
-     * 1. En Body -> form-data
-     * 2. Key: 'accesorio', Value: (tu JSON), Content-Type: application/json
-     * 3. Key: 'imagen', Value: (archivo), Content-Type: image/png (o jpg)
-     */
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AccesorioResponse> crear(
             @RequestPart(value = "accesorio") @Valid AccesorioRequest request,
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
-
         AccesorioResponse creado = service.crear(request, imagen);
         return new ResponseEntity<>(creado, HttpStatus.CREATED);
     }
@@ -53,7 +46,6 @@ public class AccesorioController {
             @PathVariable Long id,
             @RequestPart(value = "accesorio") @Valid AccesorioRequest request,
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
-
         AccesorioResponse actualizado = service.actualizar(id, request, imagen);
         return ResponseEntity.ok(actualizado);
     }
@@ -61,12 +53,6 @@ public class AccesorioController {
     @GetMapping("/buscar")
     public ResponseEntity<List<AccesorioResponse>> buscarPorNombre(@RequestParam String nombre) {
         return ResponseEntity.ok(service.buscarPorNombre(nombre));
-    }
-
-    // SOLO SE MODIFICÓ ESTO: Ahora recibe el categoriaId (Long) en la ruta
-    @GetMapping("/categoria/{categoriaId}")
-    public ResponseEntity<List<AccesorioResponse>> buscarPorCategoriaId(@PathVariable Long categoriaId) {
-        return ResponseEntity.ok(service.buscarPorCategoriaId(categoriaId));
     }
 
     @DeleteMapping("/{id}")

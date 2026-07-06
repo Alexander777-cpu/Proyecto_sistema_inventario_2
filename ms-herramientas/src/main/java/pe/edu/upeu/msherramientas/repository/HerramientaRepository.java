@@ -6,7 +6,12 @@ import pe.edu.upeu.msherramientas.entity.HerramientaEntity;
 import java.util.List;
 
 public interface HerramientaRepository extends JpaRepository <HerramientaEntity, Long>  {
+
     List<HerramientaEntity> findByNombreContainingIgnoreCase(String nombre);
 
     boolean existsByNombreIgnoreCase(String nombre);
+
+    List<HerramientaEntity> findByMarcaId(Long marcaId);
+
+    List<HerramientaEntity> findByEstadoId(Long estadoId);
 }

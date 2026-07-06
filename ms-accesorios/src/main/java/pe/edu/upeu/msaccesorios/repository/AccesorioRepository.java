@@ -12,9 +12,9 @@ public interface AccesorioRepository extends JpaRepository<AccesorioEntity, Long
     List<AccesorioEntity> findByEstadoId(Long estadoId);
 
 
-    List<AccesorioEntity> findByCategoriaId(Long categoriaId);
-
     List<AccesorioEntity> findByStockGreaterThan(Integer stock);
 
     Optional<AccesorioEntity> findByNombreIgnoreCase(String nombre);
+
+    boolean existsByNombreIgnoreCase(String nombre);
 }

@@ -2,6 +2,9 @@ package pe.edu.upeu.msproyectos.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "proyectos")
 public class ProyectoEntity {
@@ -18,23 +21,19 @@ public class ProyectoEntity {
     @Column(name = "CLIENTE_ID", nullable = false)
     private Long clienteId;
 
-    @Column(name = "HERRAMIENTA_ID", nullable = false)
-    private Long herramientaId;
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleProyectoEntity> detalles = new ArrayList<>();
 
-    @Column(name = "ACCESORIO_ID", nullable = false)
-    private Long accesorioId;
 
     public ProyectoEntity() {
     }
 
-
-    public ProyectoEntity(Long id, String nombre, String direccion, Long herramientaId, Long clienteId, Long accesorioId) {
+    public ProyectoEntity(Long id, String nombre, String direccion, Long clienteId, List<DetalleProyectoEntity> detalles) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.herramientaId = herramientaId;
         this.clienteId = clienteId;
-        this.accesorioId = accesorioId;
+        this.detalles = detalles;
     }
 
     public Long getId() {
@@ -49,8 +48,8 @@ public class ProyectoEntity {
         return nombre;
     }
 
-    public void setNombre(String nombreProyecto) {
-        this.nombre = nombreProyecto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDireccion() {
@@ -61,14 +60,6 @@ public class ProyectoEntity {
         this.direccion = direccion;
     }
 
-    public Long getHerramientaId() {
-        return herramientaId;
-    }
-
-    public void setHerramientaId(Long herramientaId) {
-        this.herramientaId = herramientaId;
-    }
-
     public Long getClienteId() {
         return clienteId;
     }
@@ -77,11 +68,11 @@ public class ProyectoEntity {
         this.clienteId = clienteId;
     }
 
-    public Long getAccesorioId() {
-        return accesorioId;
+    public List<DetalleProyectoEntity> getDetalles() {
+        return detalles;
     }
 
-    public void setAccesorioId(Long accesorioId) {
-        this.accesorioId = accesorioId;
+    public void setDetalles(List<DetalleProyectoEntity> detalles) {
+        this.detalles = detalles;
     }
 }

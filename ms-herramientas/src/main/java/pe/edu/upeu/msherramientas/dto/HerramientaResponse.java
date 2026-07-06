@@ -6,12 +6,10 @@ public class HerramientaResponse {
 
     private Long id;
     private String nombre;
-    private String tipo;
-    private String marca;
-
-    private Long estadoId;
-    private String estadoNombre; // NUEVO: Para enviar el nombre del estado al frontend
-
+    private Integer cantidad;
+    private String tipoNombre;
+    private String marcaNombre;
+    private String estadoNombre;
     private LocalDate compra;
     private LocalDate fechaInicio;
     private String imagenUrl;
@@ -21,12 +19,12 @@ public class HerramientaResponse {
     public HerramientaResponse() {
     }
 
-    public HerramientaResponse(Long id, String nombre, String tipo, String marca, Long estadoId, String estadoNombre, LocalDate compra, LocalDate fechaInicio, String imagenUrl, Integer vidaUtil, Long diasRestantes) {
+    public HerramientaResponse(Long id, String nombre, Integer cantidad, String tipoNombre, String marcaNombre, String estadoNombre, LocalDate compra, LocalDate fechaInicio, String imagenUrl, Integer vidaUtil, Long diasRestantes) {
         this.id = id;
         this.nombre = nombre;
-        this.tipo = tipo;
-        this.marca = marca;
-        this.estadoId = estadoId;
+        this.cantidad = cantidad;
+        this.tipoNombre = tipoNombre;
+        this.marcaNombre = marcaNombre;
         this.estadoNombre = estadoNombre;
         this.compra = compra;
         this.fechaInicio = fechaInicio;
@@ -51,28 +49,28 @@ public class HerramientaResponse {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getTipoNombre() {
+        return tipoNombre;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setTipoNombre(String tipoNombre) {
+        this.tipoNombre = tipoNombre;
     }
 
-    public Long getEstadoId() {
-        return estadoId;
+    public String getMarcaNombre() {
+        return marcaNombre;
     }
 
-    public void setEstadoId(Long estadoId) {
-        this.estadoId = estadoId;
+    public void setMarcaNombre(String marcaNombre) {
+        this.marcaNombre = marcaNombre;
     }
 
     public String getEstadoNombre() {

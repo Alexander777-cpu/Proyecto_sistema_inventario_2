@@ -8,7 +8,7 @@ public class ProveedorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID") // Agregado por consistencia
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "NOMBRES", length = 100, nullable = false)
@@ -17,12 +17,13 @@ public class ProveedorEntity {
     @Column(name = "APELLIDOS", length = 100, nullable = false)
     private String apellidos;
 
-    @Column(name = "TELEFONO", length = 100, nullable = false)
-    private Integer telefono;
+    @Column(name = "TELEFONO", length = 20, nullable = false)
+    private String telefono;
 
-    // Tu categoría se mantiene intacta, funcionando como tu "estado"
-    @Column(name = "CATEGORIA_ID", nullable = false)
-    private Long categoriaId;
+    // 👇 AQUÍ ESTÁ LA CORRECCIÓN CLAVE (@ManyToOne)
+    @ManyToOne
+    @JoinColumn(name = "CATEGORIA_ID", nullable = false)
+    private CategoriaProveedorEntity categoria;
 
     @Column(name = "DIRECCION", length = 100, nullable = false)
     private String direccion;
@@ -30,8 +31,7 @@ public class ProveedorEntity {
     @Column(name = "URL_UBICACION", length = 500, nullable = false)
     private String ubicacion;
 
-    // Estandarizado a imagenUrl para la subida de archivos
-    @Column(name = "IMAGEN_URL")
+    @Column(name = "FOTO")
     private String imagenUrl;
 
     @Column(name = "DESCRIPCION", length = 200, nullable = false)
@@ -40,87 +40,45 @@ public class ProveedorEntity {
     public ProveedorEntity() {
     }
 
-    public ProveedorEntity(Long id, String nombres, String apellidos, Integer telefono, Long categoriaId, String direccion, String ubicacion, String imagenUrl, String descripcion) {
+    // Constructor actualizado
+    public ProveedorEntity(Long id, String nombres, String apellidos, String telefono, CategoriaProveedorEntity categoria, String direccion, String ubicacion, String imagenUrl, String descripcion) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.categoriaId = categoriaId;
+        this.categoria = categoria;
         this.direccion = direccion;
         this.ubicacion = ubicacion;
         this.imagenUrl = imagenUrl;
         this.descripcion = descripcion;
     }
 
-    public Long getId() {
-        return id;
-    }
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getNombres() { return nombres; }
+    public void setNombres(String nombres) { this.nombres = nombres; }
 
-    public String getNombres() {
-        return nombres;
-    }
+    public String getApellidos() { return apellidos; }
+    public void setApellidos(String apellidos) { this.apellidos = apellidos; }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public String getApellidos() {
-        return apellidos;
-    }
+    // Nuevos getter y setter apuntando a la Entidad
+    public CategoriaProveedorEntity getCategoria() { return categoria; }
+    public void setCategoria(CategoriaProveedorEntity categoria) { this.categoria = categoria; }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
-    public Integer getTelefono() {
-        return telefono;
-    }
+    public String getUbicacion() { return ubicacion; }
+    public void setUbicacion(String ubicacion) { this.ubicacion = ubicacion; }
 
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
-    public Long getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public String getImagenUrl() {
-        return imagenUrl;
-    }
-
-    public void setImagenUrl(String imagenUrl) {
-        this.imagenUrl = imagenUrl;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 }

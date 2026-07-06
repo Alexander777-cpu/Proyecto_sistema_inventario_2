@@ -9,7 +9,6 @@ import pe.edu.upeu.authservice.service.AuthService;
 import pe.edu.upeu.authservice.dto.UsuarioResponse;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

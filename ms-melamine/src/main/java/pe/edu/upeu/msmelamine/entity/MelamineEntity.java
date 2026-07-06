@@ -1,7 +1,6 @@
 package pe.edu.upeu.msmelamine.entity;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -22,30 +21,36 @@ public class MelamineEntity {
     @Column(name = "LARGO", nullable = false)
     private BigDecimal largo;
 
-    @Column(name = "COLOR", nullable = false, length = 100)
-    private String color;
+    @Column(name = "CANTIDAD", nullable = false)
+    private Integer cantidad;
 
-    @Column(name = "MARCA", nullable = false, length = 100)
-    private String marca;
+    @ManyToOne
+    @JoinColumn(name = "COLOR_ID", nullable = false)
+    private ColorMelamineEntity color;
 
-    @Column(name = "ESTADO_ID", nullable = false)
-    private Long estadoId;
+    @ManyToOne
+    @JoinColumn(name = "MARCA_ID", nullable = false)
+    private MarcaMelamineEntity marca;
 
-    // Estandarizado a imagenUrl para la subida de archivos a la nube
+    @ManyToOne
+    @JoinColumn(name = "ESTADO_ID", nullable = false)
+    private EstadoMelamineEntity estado;
+
     @Column(name = "IMAGEN_URL")
     private String imagenUrl;
 
     public MelamineEntity() {
     }
 
-    public MelamineEntity(Long id, String nombre, BigDecimal ancho, BigDecimal largo, String color, String marca, Long estadoId, String imagenUrl) {
+    public MelamineEntity(Long id, String nombre, BigDecimal ancho, BigDecimal largo, Integer cantidad, ColorMelamineEntity color, MarcaMelamineEntity marca, EstadoMelamineEntity estado, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.ancho = ancho;
         this.largo = largo;
+        this.cantidad = cantidad;
         this.color = color;
         this.marca = marca;
-        this.estadoId = estadoId;
+        this.estado = estado;
         this.imagenUrl = imagenUrl;
     }
 
@@ -81,28 +86,36 @@ public class MelamineEntity {
         this.largo = largo;
     }
 
-    public String getColor() {
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public ColorMelamineEntity getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(ColorMelamineEntity color) {
         this.color = color;
     }
 
-    public String getMarca() {
+    public MarcaMelamineEntity getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(MarcaMelamineEntity marca) {
         this.marca = marca;
     }
 
-    public Long getEstadoId() {
-        return estadoId;
+    public EstadoMelamineEntity getEstado() {
+        return estado;
     }
 
-    public void setEstadoId(Long estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado(EstadoMelamineEntity estado) {
+        this.estado = estado;
     }
 
     public String getImagenUrl() {

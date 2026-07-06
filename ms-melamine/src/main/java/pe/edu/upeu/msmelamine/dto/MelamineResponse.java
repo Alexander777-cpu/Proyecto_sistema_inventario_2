@@ -5,31 +5,34 @@ import java.math.BigDecimal;
 public class MelamineResponse {
 
     private Long id;
-
-    // Atributo agregado
     private String nombre;
-
     private BigDecimal ancho;
     private BigDecimal largo;
-    private String color;
-    private String marca;
+    private Integer cantidad;
+
+    private Long colorId;
+    private String colorNombre;
+
+    private Long marcaId;
+    private String marcaNombre;
 
     private Long estadoId;
     private String estadoNombre;
 
-    // Cambiado de foto a imagenUrl
     private String imagenUrl;
 
-    public MelamineResponse() {
-    }
+    public MelamineResponse() {}
 
-    public MelamineResponse(Long id, String nombre, BigDecimal ancho, BigDecimal largo, String color, String marca, Long estadoId, String estadoNombre, String imagenUrl) {
+    public MelamineResponse(Long id, String nombre, BigDecimal ancho, BigDecimal largo, Integer cantidad, Long colorId, String colorNombre, Long marcaId, String marcaNombre, Long estadoId, String estadoNombre, String imagenUrl) {
         this.id = id;
         this.nombre = nombre;
         this.ancho = ancho;
         this.largo = largo;
-        this.color = color;
-        this.marca = marca;
+        this.cantidad = cantidad;
+        this.colorId = colorId;
+        this.colorNombre = colorNombre;
+        this.marcaId = marcaId;
+        this.marcaNombre = marcaNombre;
         this.estadoId = estadoId;
         this.estadoNombre = estadoNombre;
         this.imagenUrl = imagenUrl;
@@ -67,20 +70,44 @@ public class MelamineResponse {
         this.largo = largo;
     }
 
-    public String getColor() {
-        return color;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public String getMarca() {
-        return marca;
+    public Long getColorId() {
+        return colorId;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
+    }
+
+    public String getColorNombre() {
+        return colorNombre;
+    }
+
+    public void setColorNombre(String colorNombre) {
+        this.colorNombre = colorNombre;
+    }
+
+    public Long getMarcaId() {
+        return marcaId;
+    }
+
+    public void setMarcaId(Long marcaId) {
+        this.marcaId = marcaId;
+    }
+
+    public String getMarcaNombre() {
+        return marcaNombre;
+    }
+
+    public void setMarcaNombre(String marcaNombre) {
+        this.marcaNombre = marcaNombre;
     }
 
     public Long getEstadoId() {

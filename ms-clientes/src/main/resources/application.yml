@@ -21,9 +21,6 @@ spring:
 
 server:
   port: 8083
-  # Si quieres el context-path como en el ejemplo de clase, descomenta la siguiente línea:
-  # servlet:
-  #   context-path: /clientes
 
 eureka:
   client:
@@ -32,7 +29,6 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# --- CONFIGURACIÓN DE MONITOREO (ACTUATOR) ---
 management:
   endpoints:
     web:
@@ -41,25 +37,3 @@ management:
   endpoint:
     health:
       show-details: always
-  health:
-    circuitbreakers:
-      enabled: true
-
-# --- CONFIGURACIÓN DE RESILIENCIA (RESILIENCE4J) ---
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 5s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-    instances:
-      # IMPORTANTE: Este nombre debe coincidir con @CircuitBreaker(name = "clientesCB")
-      clientesCB:
-        baseConfig: default
-

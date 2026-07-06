@@ -2,9 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/auth-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/auth-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-accesorios/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ms-accesorios/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-categorias/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-categorias/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-clientes/src/main/java" charset="UTF-8" />
@@ -13,11 +17,14 @@
     <file url="file://$PROJECT_DIR$/ms-estado/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-estados/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-herramientas/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ms-herramientas/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-melamine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ms-melamine/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-ordenes/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-ordenes/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-proveedores/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ms-proyectos/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
   </component>
 </project>

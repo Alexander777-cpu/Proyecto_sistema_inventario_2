@@ -10,9 +10,9 @@ public interface ProveedorRepository extends JpaRepository<ProveedorEntity,Long>
 
     List<ProveedorEntity> findByNombresContainingIgnoreCase(String nombres);
 
-
     boolean existsByNombresIgnoreCase(String nombres);
 
+    List<ProveedorEntity> findByCategoriaId(Long categoriaId);
 
     Optional<ProveedorEntity> findByNombresAndApellidos(String nombres, String apellidos);
 }
