@@ -6,13 +6,10 @@ import pe.edu.upeu.msproyectos.entity.ProyectoEntity;
 
 public class DetalleProyectoRequest {
 
-    @NotNull(message = "La herramienta es obligatoria")
     private Long herramientaId;
     private Long cantidadHerramienta;
-    @NotNull(message = "El accesorio es obligatorio")
     private Long accesorioId;
     private Long cantidadAccesorio;
-    @NotNull(message = "El melamine es obligatorio")
     private Long melamineId;
     private Long cantidadMelamine;
 

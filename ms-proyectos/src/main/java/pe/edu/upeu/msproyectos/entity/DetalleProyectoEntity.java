@@ -15,17 +15,17 @@ public class DetalleProyectoEntity {
     @Column(name = "herramienta_id")
     private Long herramientaId;
     @Column(name = "cantidad_herramienta")
-    private Long cantidadHerramienta = 0;
+    private Long cantidadHerramienta;
 
     @Column(name = "accesorio_id")
     private Long accesorioId;
     @Column(name = "cantidad_accesorio")
-    private Long cantidadAccesorio = 0;
+    private Long cantidadAccesorio;
 
     @Column(name = "melamine_id")
     private Long melamineId;
     @Column(name = "cantidad_melamine")
-    private Long cantidadMelamine = 0;
+    private Long cantidadMelamine;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id")
