@@ -45,18 +45,17 @@ public class ProveedorController {
         return ResponseEntity.ok(service.buscarPorCategoria(categoriaId));
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ProveedorResponse> crear(
-            @RequestPart(value = "proveedor") @Valid ProveedorRequest request,
+            @RequestPart("proveedor") ProveedorRequest request, // Nombre unificado
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
-
-        return new ResponseEntity<>(service.crear(request, imagen), HttpStatus.CREATED);
+        return ResponseEntity.ok(this.service.crear(request, imagen));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProveedorResponse> actualizar(
             @PathVariable Long id,
-            @RequestPart(value = "proveedor") @Valid ProveedorRequest request,
+            @RequestPart(value = "proveedor") @Valid ProveedorRequest request, // Nombre unificado
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) throws Exception {
 
         return ResponseEntity.ok(service.actualizar(id, request, imagen));

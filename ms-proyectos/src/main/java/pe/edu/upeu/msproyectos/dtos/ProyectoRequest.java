@@ -1,8 +1,12 @@
 package pe.edu.upeu.msproyectos.dtos;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 public class ProyectoRequest {
     @NotBlank(message = "El nombre del proyecto es obligatorio")
@@ -16,11 +20,12 @@ public class ProyectoRequest {
     @NotNull(message = "El cliente es obligatorio")
     private Long clienteId;
 
-    @NotNull(message = "La herramienta es obligatoria")
-    private Long herramientaId;
 
-    @NotNull(message = "El accesorio es obligatorio")
-    private Long accesorioId;
+
+    @Valid // IMPORTANTE: Esto le dice a Spring que también valide los objetos dentro de la lista
+    @NotEmpty(message = "El proyecto debe tener al menos un detalle")
+    private List<DetalleProyectoRequest> detalles;
+
 
     public ProyectoRequest() {
     }
@@ -49,19 +54,11 @@ public class ProyectoRequest {
         this.clienteId = clienteId;
     }
 
-    public Long getHerramientaId() {
-        return herramientaId;
+    public List<DetalleProyectoRequest> getDetalles() {
+        return detalles;
     }
 
-    public void setHerramientaId(Long herramientaId) {
-        this.herramientaId = herramientaId;
-    }
-
-    public Long getAccesorioId() {
-        return accesorioId;
-    }
-
-    public void setAccesorioId(Long accesorioId) {
-        this.accesorioId = accesorioId;
+    public void setDetalles(List<DetalleProyectoRequest> detalles) {
+        this.detalles = detalles;
     }
 }

@@ -31,7 +31,7 @@ public class ProveedorEntity {
     @Column(name = "URL_UBICACION", length = 500, nullable = false)
     private String ubicacion;
 
-    @Column(name = "IMAGEN_URL")
+    @Column(name = "FOTO")
     private String imagenUrl;
 
     @Column(name = "DESCRIPCION", length = 200, nullable = false)

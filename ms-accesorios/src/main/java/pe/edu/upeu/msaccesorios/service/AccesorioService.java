@@ -50,6 +50,13 @@ public class AccesorioService implements IAccesorioService {
         if (repository.existsByNombreIgnoreCase(request.getNombre())) {
             throw new IllegalArgumentException("Ya existe un accesorio con el nombre: " + request.getNombre());
         }
+        // --- PROTECCIÓN AÑADIDA AQUÍ ---
+        if (request.getMarcaId() == null || request.getMarcaId() <= 0) {
+            throw new IllegalArgumentException("El ID de la marca es inválido.");
+        }
+        if (request.getEstadoId() == null || request.getEstadoId() <= 0) {
+            throw new IllegalArgumentException("El ID del estado es inválido.");
+        }
 
         MarcaAccesorioEntity marca = marcaService.buscarPorId(request.getMarcaId());
         EstadoAccesorioEntity estado = estadoService.buscarPorId(request.getEstadoId());
